@@ -1,0 +1,66 @@
+.scroll-reveal {
+  opacity: 0;
+  will-change: transform, opacity;
+  transition-property: transform, opacity;
+  transition-duration: 0.8s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); /* snappy but smooth */
+}
+
+/* Modifier: Fade Up */
+.scroll-reveal--fade-up {
+  transform: translateY(30px);
+}
+.scroll-reveal--fade-up.scroll-reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Modifier: Fade In */
+.scroll-reveal--fade-in {
+  transform: none;
+}
+.scroll-reveal--fade-in.scroll-reveal--visible {
+  opacity: 1;
+}
+
+/* Modifier: Scale Up */
+.scroll-reveal--scale-up {
+  transform: scale(0.9);
+}
+.scroll-reveal--scale-up.scroll-reveal--visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Modifier: Sketch Draw (for SVG doodles) */
+.scroll-reveal--sketch-draw {
+  opacity: 1; /* SVGs manage their own opacity/stroke */
+}
+
+.scroll-reveal--sketch-draw.scroll-reveal--visible svg path,
+.scroll-reveal--sketch-draw.scroll-reveal--visible svg line,
+.scroll-reveal--sketch-draw.scroll-reveal--visible svg polyline,
+.scroll-reveal--sketch-draw.scroll-reveal--visible svg circle,
+.scroll-reveal--sketch-draw.scroll-reveal--visible svg rect {
+  /* We use stroke-dasharray and stroke-dashoffset trick in Doodle component or via CSS animation */
+  animation: sketchDraw 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes sketchDraw {
+  from {
+    stroke-dashoffset: 2000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

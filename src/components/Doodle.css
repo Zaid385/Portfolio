@@ -11,7 +11,12 @@
 
 /* Allow strokes and fills to inherit colors if we want them to, though many SVGs have hardcoded colors. 
    We might need to adjust this depending on the asset pack structure. */
-.doodle-wrapper path {
-  /* Using currentcolor for stroke if it's black in the original SVG */
-  /* This is a bit tricky depending on how the SVGs were exported. */
+.doodle-wrapper path,
+.doodle-wrapper line,
+.doodle-wrapper polyline,
+.doodle-wrapper circle,
+.doodle-wrapper rect {
+  /* Set up for stroke-draw animation used by ScrollReveal */
+  stroke-dasharray: 3000;
+  stroke-dashoffset: 0; 
 }

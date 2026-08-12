@@ -28,6 +28,11 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px; /* Offset for sticky navbar */
+}
+
 body {
   font-family: var(--font-sans);
   color: var(--color-ink);
