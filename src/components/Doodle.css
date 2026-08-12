@@ -1,0 +1,17 @@
+.doodle-wrapper {
+  display: inline-block;
+  line-height: 0;
+}
+
+.doodle-wrapper svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Allow strokes and fills to inherit colors if we want them to, though many SVGs have hardcoded colors. 
+   We might need to adjust this depending on the asset pack structure. */
+.doodle-wrapper path {
+  /* Using currentcolor for stroke if it's black in the original SVG */
+  /* This is a bit tricky depending on how the SVGs were exported. */
+}

@@ -1,0 +1,110 @@
+.tactile-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.75rem;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  
+  /* Hand-drawn sketchy border base */
+  border: 2px solid var(--color-ink);
+  border-radius: 4px 6px 3px 5px;
+  
+  /* Imperfect shadow */
+  box-shadow: 4px 5px 0px 0px var(--color-ink);
+  cursor: pointer;
+  /* Phase 1: Robust tactile animation */
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-transform: uppercase;
+  font-weight: 700;
+  user-select: none;
+  text-decoration: none;
+  position: relative;
+  z-index: 10;
+}
+
+.tactile-btn::before {
+  content: "";
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border: 2px solid var(--color-ink);
+  border-radius: 6px 4px 5px 3px;
+  transform: rotate(0.8deg);
+  pointer-events: none;
+}
+
+.tactile-btn::after {
+  content: "";
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border: 1.5px solid var(--color-ink);
+  border-radius: 3px 5px 4px 6px;
+  transform: rotate(-0.5deg);
+  pointer-events: none;
+}
+
+.tactile-btn:hover {
+  transform: translateY(-2px) rotate(1deg);
+  box-shadow: 6px 7px 0px 0px var(--color-ink);
+}
+
+.tactile-btn:hover::before {
+  transform: rotate(1.2deg) scale(1.01);
+}
+
+.tactile-btn:active {
+  transform: translateY(4px) scale(0.98);
+  box-shadow: 0px 0px 0px 0px var(--color-ink);
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
+.tactile-btn:focus-visible {
+  outline: 3px dashed var(--color-accent);
+  outline-offset: 4px;
+}
+
+.tactile-btn__label {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.tactile-btn__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Variants */
+.tactile-btn--primary {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+}
+.tactile-btn--primary .tactile-btn__label {
+  color: var(--color-paper);
+}
+
+.tactile-btn--secondary {
+  background-color: var(--color-paper);
+}
+
+.tactile-btn--navigation {
+  padding: 0.5rem 1rem;
+  border-width: 2px;
+  box-shadow: 3px 3px 0px 0px var(--color-ink);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.tactile-btn--navigation:hover {
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+.tactile-btn--navigation:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}

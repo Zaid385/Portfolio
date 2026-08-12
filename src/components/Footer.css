@@ -1,0 +1,32 @@
+.footer {
+  padding: 2rem;
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.footer__text {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+.footer__doodle {
+  position: absolute;
+  right: 10%;
+  bottom: -20px;
+  width: 100px;
+  height: 100px;
+  opacity: 0.1;
+  color: var(--color-paper);
+}
