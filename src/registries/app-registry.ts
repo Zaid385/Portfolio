@@ -6,6 +6,7 @@ import { Notepad } from '../apps/notepad/Notepad';
 import { EditableNotepad } from '../apps/notepad/EditableNotepad';
 import { CommandPrompt } from '../apps/command-prompt/CommandPrompt';
 import { ControlPanel } from '../apps/control-panel/ControlPanel';
+import { Browser } from '../apps/browser/Browser';
 
 export interface AppDefinition {
   id: string;
@@ -79,5 +80,14 @@ export const appRegistry: Record<string, AppDefinition> = {
     defaultWindow: { width: 700, height: 500, resizable: true, maximizable: true, minWidth: 500, minHeight: 400 },
     category: 'system',
     component: ControlPanel,
+  },
+  'browser': {
+    id: 'browser',
+    title: 'Internet Explorer',
+    icon: AssetRegistry.XP_INTERNET_ICON,
+    singleInstance: false,
+    defaultWindow: { width: 800, height: 600, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
+    category: 'utility',
+    component: Browser,
   }
 };

@@ -18,5 +18,6 @@ export const AssetRegistry = {
   XP_RECYCLE_BIN_ICON_EMPTY: Icon2,
   XP_NOTEPAD_ICON: Icon3,
   XP_COMMAND_PROMPT_ICON: Icon4,
+  XP_INTERNET_ICON: Icon1,
   PROFILE_PIC: ProfilePic,
 };

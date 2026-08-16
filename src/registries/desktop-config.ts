@@ -43,6 +43,13 @@ export const desktopConfig: DesktopIconConfig[] = [
     label: 'Command Prompt',
     icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
     appId: 'command-prompt',
-    order: 3,
+    order: 4,
+  },
+  {
+    id: 'desktop-browser',
+    label: 'Internet Explorer',
+    icon: AssetRegistry.XP_INTERNET_ICON,
+    appId: 'browser',
+    order: 5,
   }
 ];

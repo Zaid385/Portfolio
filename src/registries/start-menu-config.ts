@@ -13,12 +13,20 @@ export interface StartMenuEntry {
 
 export const startMenuConfig: StartMenuEntry[] = [
   {
+    id: 'sm-browser',
+    label: 'Internet',
+    icon: AssetRegistry.XP_INTERNET_ICON,
+    appId: 'browser',
+    column: 'left',
+    order: 0,
+  },
+  {
     id: 'sm-cmd',
     label: 'Command Prompt',
     icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
     appId: 'command-prompt',
     column: 'left',
-    order: 0,
+    order: 1,
   },
   {
     id: 'sm-notepad',
