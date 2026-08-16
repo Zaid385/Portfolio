@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BootController } from './boot/BootController';
 import { Desktop } from './shell/desktop/Desktop';
 import { WindowManager } from './shell/window/WindowManager';
+import { Taskbar } from './shell/taskbar/Taskbar';
 
 function App() {
   const [bootComplete, setBootComplete] = useState(false);
@@ -16,6 +17,7 @@ function App() {
         <div className="w-full h-full xp-fade-in relative z-0">
           <Desktop />
           <WindowManager />
+          <Taskbar />
         </div>
       )}
     </div>

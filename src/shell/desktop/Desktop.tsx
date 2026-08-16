@@ -32,7 +32,7 @@ export function Desktop() {
       style={{ backgroundImage: `url(${AssetRegistry.XP_BLISS_WALLPAPER})` }}
       onClick={handleDeselectAll}
     >
-      <div className="absolute inset-0 p-2 flex flex-col flex-wrap content-start items-start gap-y-4 gap-x-2">
+      <div className="absolute inset-0 pb-[40px] p-2 flex flex-col flex-wrap content-start items-start gap-y-4 gap-x-2">
         {desktopConfig
           .sort((a, b) => a.order - b.order)
           .map((config) => (
