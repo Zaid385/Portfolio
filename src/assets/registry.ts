@@ -8,6 +8,8 @@ import Icon2 from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON20_1.ico';
 import Icon3 from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON28_1.ico';
 import Icon4 from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON37_1.ico';
 
+import ProfilePic from '../../assets/Profile/banana-leclerc.png';
+
 export const AssetRegistry = {
   XP_BOOT_LOADING_BAR: BootGif,
   XP_BOOT_LOGO: WindowsLogoSmall,
@@ -16,4 +18,5 @@ export const AssetRegistry = {
   XP_RECYCLE_BIN_ICON_EMPTY: Icon2,
   XP_NOTEPAD_ICON: Icon3,
   XP_COMMAND_PROMPT_ICON: Icon4,
+  PROFILE_PIC: ProfilePic,
 };

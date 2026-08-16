@@ -1,12 +1,15 @@
 import { useWindowStore } from '../../stores/window-store';
 import { AssetRegistry } from '../../assets/registry';
 import { useState, useEffect } from 'react';
+import { StartMenu } from './StartMenu';
 
 export function Taskbar() {
   const windows = useWindowStore(state => state.windows);
   const focusWindow = useWindowStore(state => state.focusWindow);
   const minimizeWindow = useWindowStore(state => state.minimizeWindow);
   const restoreWindow = useWindowStore(state => state.restoreWindow);
+  const toggleStartMenu = useWindowStore(state => state.toggleStartMenu);
+  const startMenuOpen = useWindowStore(state => state.startMenuOpen);
   
   const [time, setTime] = useState('');
 
@@ -20,18 +23,23 @@ export function Taskbar() {
     return () => clearInterval(interval);
   }, []);
 
-  // Sort windows by their opening order (which is their array index in Zustand by default, or just preserve array order)
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-[40px] z-[9999] flex text-white select-none bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#245edb] border-t border-[#003399]">
-      {/* Start Button */}
-      <button 
-        className="flex items-center h-full px-4 lg:px-6 bg-gradient-to-b from-[#3b9c4f] to-[#2a7a37] hover:brightness-110 active:brightness-90 rounded-r-[14px] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.6)] font-bold text-xl sm:text-2xl italic tracking-wide"
-        style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}
-        onClick={() => console.log('Start menu clicked')}
-      >
-        <img src={AssetRegistry.XP_BOOT_LOGO} alt="Start" className="w-6 h-6 sm:w-7 sm:h-7 mr-2 drop-shadow-md pointer-events-none" />
-        start
-      </button>
+    <>
+      <StartMenu />
+      <div className="absolute bottom-0 left-0 right-0 h-[40px] z-[9999] flex text-white select-none bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#245edb] border-t border-[#003399]">
+        {/* Start Button */}
+        <button 
+          className={`flex items-center h-full px-4 lg:px-6 hover:brightness-110 active:brightness-90 rounded-r-[14px] font-bold text-xl sm:text-2xl italic tracking-wide shadow-[inset_1px_1px_2px_rgba(255,255,255,0.6)] ${
+            startMenuOpen 
+              ? 'bg-gradient-to-b from-[#2a7a37] to-[#1e5a26] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.6)]' 
+              : 'bg-gradient-to-b from-[#3b9c4f] to-[#2a7a37]'
+          }`}
+          style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}
+          onClick={toggleStartMenu}
+        >
+          <img src={AssetRegistry.XP_BOOT_LOGO} alt="Start" className="w-6 h-6 sm:w-7 sm:h-7 mr-2 drop-shadow-md pointer-events-none" />
+          start
+        </button>
 
       {/* Task Buttons Area */}
       <div className="flex-1 flex items-center px-2 space-x-1 overflow-x-auto overflow-y-hidden" style={{ scrollbarWidth: 'none' }}>
@@ -69,5 +77,6 @@ export function Taskbar() {
         <span className="text-sm font-normal text-white">{time}</span>
       </div>
     </div>
+    </>
   );
 }

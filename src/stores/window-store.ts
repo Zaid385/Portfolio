@@ -22,6 +22,11 @@ export interface WindowInstance {
 interface WindowState {
   windows: WindowInstance[];
   nextZIndex: number;
+  startMenuOpen: boolean;
+  
+  toggleStartMenu: () => void;
+  closeStartMenu: () => void;
+  
   launchApp: (appId: string, launchArgs?: Record<string, unknown>) => string | null;
   closeWindow: (windowId: string) => void;
   focusWindow: (windowId: string) => void;
@@ -37,6 +42,10 @@ const CASCADE_OFFSET = 26;
 export const useWindowStore = create<WindowState>((set, get) => ({
   windows: [],
   nextZIndex: 100,
+  startMenuOpen: false,
+
+  toggleStartMenu: () => set((s) => ({ startMenuOpen: !s.startMenuOpen })),
+  closeStartMenu: () => set({ startMenuOpen: false }),
 
   launchApp: (appId, launchArgs) => {
     const appDef = appRegistry[appId];
