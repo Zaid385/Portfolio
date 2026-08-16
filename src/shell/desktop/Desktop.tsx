@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { desktopConfig } from '../../registries/desktop-config';
 import { DesktopIcon } from './DesktopIcon';
 import { AssetRegistry } from '../../assets/registry';
+import { useWindowStore } from '../../stores/window-store';
 
 export function Desktop() {
   const [selectedIcons, setSelectedIcons] = useState<Set<string>>(new Set());
@@ -22,9 +23,7 @@ export function Desktop() {
   };
 
   const handleDoubleClick = (appId: string) => {
-    // Phase 2 requirement: Do not implement window manager logic yet.
-    // Clean interface placeholder for launchApp.
-    console.log(`[Phase 2 Placeholder] launchApp called for: ${appId}`);
+    useWindowStore.getState().launchApp(appId);
   };
 
   return (
