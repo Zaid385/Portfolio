@@ -51,5 +51,13 @@ export const startMenuConfig: StartMenuEntry[] = [
     appId: 'recycle-bin',
     column: 'right',
     order: 1,
+  },
+  {
+    id: 'sm-control-panel',
+    label: 'Control Panel',
+    icon: AssetRegistry.XP_MY_COMPUTER_ICON, // Using computer icon as placeholder
+    appId: 'control-panel',
+    column: 'right',
+    order: 2,
   }
 ];

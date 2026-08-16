@@ -5,6 +5,7 @@ import { FileExplorer } from '../apps/file-explorer/FileExplorer';
 import { Notepad } from '../apps/notepad/Notepad';
 import { EditableNotepad } from '../apps/notepad/EditableNotepad';
 import { CommandPrompt } from '../apps/command-prompt/CommandPrompt';
+import { ControlPanel } from '../apps/control-panel/ControlPanel';
 
 export interface AppDefinition {
   id: string;
@@ -69,5 +70,14 @@ export const appRegistry: Record<string, AppDefinition> = {
     defaultWindow: { width: 660, height: 400, resizable: true, maximizable: true, minWidth: 400, minHeight: 200 },
     category: 'system',
     component: CommandPrompt,
+  },
+  'control-panel': {
+    id: 'control-panel',
+    title: 'Control Panel',
+    icon: AssetRegistry.XP_MY_COMPUTER_ICON, // Using computer icon as placeholder
+    singleInstance: true,
+    defaultWindow: { width: 700, height: 500, resizable: true, maximizable: true, minWidth: 500, minHeight: 400 },
+    category: 'system',
+    component: ControlPanel,
   }
 };

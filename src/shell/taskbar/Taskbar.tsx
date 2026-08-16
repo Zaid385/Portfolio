@@ -1,7 +1,7 @@
 import { useWindowStore } from '../../stores/window-store';
 import { AssetRegistry } from '../../assets/registry';
-import { useState, useEffect } from 'react';
 import { StartMenu } from './StartMenu';
+import { SystemTray } from './SystemTray';
 
 export function Taskbar() {
   const windows = useWindowStore(state => state.windows);
@@ -10,18 +10,6 @@ export function Taskbar() {
   const restoreWindow = useWindowStore(state => state.restoreWindow);
   const toggleStartMenu = useWindowStore(state => state.toggleStartMenu);
   const startMenuOpen = useWindowStore(state => state.startMenuOpen);
-  
-  const [time, setTime] = useState('');
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setTime(now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }));
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <>
@@ -72,10 +60,8 @@ export function Taskbar() {
         })}
       </div>
 
-      {/* System Tray Placeholder */}
-      <div className="flex items-center h-full px-4 bg-gradient-to-b from-[#0e5bcc] to-[#127ef6] border-l border-[#0e4ba7] shadow-[inset_1px_0_1px_rgba(255,255,255,0.3)] min-w-[90px] justify-end shrink-0">
-        <span className="text-sm font-normal text-white">{time}</span>
-      </div>
+      {/* Right side - System Tray */}
+      <SystemTray />
     </div>
     </>
   );
