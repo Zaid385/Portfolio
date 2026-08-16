@@ -12,7 +12,7 @@ export function BootController({ onBootComplete }: { onBootComplete: () => void 
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black cursor-none">
+    <div className="fixed inset-0 z-50 w-full h-[100dvh] bg-black cursor-none overflow-hidden m-0 p-0">
       {bootState === 'BIOS' && (
         <BiosStage onComplete={() => setBootState('LOADING')} />
       )}

@@ -7,12 +7,17 @@
   --font-xp: 'Tahoma', sans-serif;
 }
 
-body {
-  font-family: var(--font-xp);
+html, body, #root {
+  width: 100%;
+  height: 100dvh;
   margin: 0;
   padding: 0;
   overflow: hidden; /* OS desktop should not scroll */
   background-color: var(--xp-bg-color);
+}
+
+body {
+  font-family: var(--font-xp);
 }
 
 @keyframes xp-fade-in {
@@ -28,4 +33,52 @@ body {
   .xp-fade-in {
     animation-duration: 0.1s;
   }
+}
+
+.xp-boot-bar-container {
+  width: 100%;
+  max-width: 280px;
+  height: 22px;
+  border: 2px solid #a3a3a3;
+  border-radius: 4px;
+  padding: 2px;
+  position: relative;
+  overflow: hidden;
+  background: black;
+}
+
+.xp-boot-bar-blocks {
+  display: flex;
+  gap: 2px;
+  height: 100%;
+  position: absolute;
+  left: -80px;
+  animation: xp-loading-scroll 2.5s infinite linear;
+}
+
+.xp-boot-bar-block {
+  width: 12px;
+  height: 100%;
+  background: linear-gradient(to bottom, #2d55b4 0%, #4c82db 20%, #4c82db 80%, #2d55b4 100%);
+  border-radius: 1px;
+}
+
+@keyframes xp-loading-scroll {
+  0% { left: -80px; }
+  100% { left: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-boot-bar-blocks {
+    animation: none;
+    left: 10px;
+  }
+}
+
+.text-shadow-xp {
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8), 0px 0px 1px rgba(0,0,0,0.8);
+}
+
+.xp-icon-selected img {
+  filter: opacity(0.7) drop-shadow(0 0 0 #0b61ff);
 }
