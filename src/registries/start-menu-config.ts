@@ -29,6 +29,14 @@ export const startMenuConfig: StartMenuEntry[] = [
     order: 1,
   },
   {
+    id: 'sm-notepad-editable',
+    label: 'Notepad',
+    icon: AssetRegistry.XP_NOTEPAD_ICON,
+    appId: 'notepad',
+    column: 'left',
+    order: 2,
+  },
+  {
     id: 'sm-my-computer',
     label: 'My Computer',
     icon: AssetRegistry.XP_MY_COMPUTER_ICON,

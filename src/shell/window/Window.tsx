@@ -1,8 +1,9 @@
 import { useWindowStore, type WindowInstance } from '../../stores/window-store';
-import { FileExplorer } from '../../apps/file-explorer/FileExplorer';
+import { appRegistry } from '../../registries/app-registry';
 
 export function Window({ win }: { win: WindowInstance }) {
   const store = useWindowStore();
+  const appDef = appRegistry[win.appId];
   
   if (win.state === 'minimized') return null;
 
@@ -95,8 +96,8 @@ export function Window({ win }: { win: WindowInstance }) {
       </div>
       
       <div className="flex-1 bg-white border-t border-[#003399] overflow-auto relative m-[2px]">
-        {win.appId === 'file-explorer' ? (
-          <FileExplorer initialNodeId={win.launchArgs?.initialPath as string | undefined} windowId={win.windowId} />
+        {appDef?.component ? (
+          <appDef.component windowId={win.windowId} initialNodeId={win.launchArgs?.initialPath as string | undefined} launchArgs={win.launchArgs} />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 p-4 text-center">
              <h2 className="text-xl font-bold mb-2 text-gray-600">{win.appId}</h2>

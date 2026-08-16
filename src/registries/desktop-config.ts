@@ -32,6 +32,13 @@ export const desktopConfig: DesktopIconConfig[] = [
     order: 2,
   },
   {
+    id: 'desktop-notepad-editable',
+    label: 'Notepad',
+    icon: AssetRegistry.XP_NOTEPAD_ICON,
+    appId: 'notepad',
+    order: 3,
+  },
+  {
     id: 'desktop-cmd',
     label: 'Command Prompt',
     icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
