@@ -4,6 +4,7 @@ import { AssetRegistry } from '../assets/registry';
 import { FileExplorer } from '../apps/file-explorer/FileExplorer';
 import { Notepad } from '../apps/notepad/Notepad';
 import { EditableNotepad } from '../apps/notepad/EditableNotepad';
+import { CommandPrompt } from '../apps/command-prompt/CommandPrompt';
 
 export interface AppDefinition {
   id: string;
@@ -66,6 +67,7 @@ export const appRegistry: Record<string, AppDefinition> = {
     icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
     singleInstance: false,
     defaultWindow: { width: 660, height: 400, resizable: true, maximizable: true, minWidth: 400, minHeight: 200 },
-    category: 'system'
+    category: 'system',
+    component: CommandPrompt,
   }
 };
