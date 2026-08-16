@@ -1,4 +1,5 @@
 import { useWindowStore, type WindowInstance } from '../../stores/window-store';
+import { FileExplorer } from '../../apps/file-explorer/FileExplorer';
 
 export function Window({ win }: { win: WindowInstance }) {
   const store = useWindowStore();
@@ -94,11 +95,15 @@ export function Window({ win }: { win: WindowInstance }) {
       </div>
       
       <div className="flex-1 bg-white border-t border-[#003399] overflow-auto relative m-[2px]">
-        <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 p-4 text-center">
-           <h2 className="text-xl font-bold mb-2 text-gray-600">{win.appId}</h2>
-           <p className="text-sm">App Content Placeholder</p>
-           {win.launchArgs && <pre className="mt-4 text-xs text-left bg-gray-100 p-2 rounded">{JSON.stringify(win.launchArgs, null, 2)}</pre>}
-        </div>
+        {win.appId === 'file-explorer' ? (
+          <FileExplorer initialNodeId={win.launchArgs?.initialPath as string | undefined} windowId={win.windowId} />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 p-4 text-center">
+             <h2 className="text-xl font-bold mb-2 text-gray-600">{win.appId}</h2>
+             <p className="text-sm">App Content Placeholder</p>
+             {win.launchArgs && <pre className="mt-4 text-xs text-left bg-gray-100 p-2 rounded">{JSON.stringify(win.launchArgs, null, 2)}</pre>}
+          </div>
+        )}
       </div>
     </div>
   );
