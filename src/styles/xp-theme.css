@@ -1,0 +1,31 @@
+/* Base Windows XP theme variables and utilities */
+:root {
+  --xp-blue-dark: #003399;
+  --xp-blue-light: #2562d9;
+  --xp-taskbar-blue: #245edb;
+  --xp-bg-color: #000000;
+  --font-xp: 'Tahoma', sans-serif;
+}
+
+body {
+  font-family: var(--font-xp);
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* OS desktop should not scroll */
+  background-color: var(--xp-bg-color);
+}
+
+@keyframes xp-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.xp-fade-in {
+  animation: xp-fade-in 1.5s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-fade-in {
+    animation-duration: 0.1s;
+  }
+}
