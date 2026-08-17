@@ -110,7 +110,7 @@ export function FileExplorer({ initialNodeId = 'root' }: FileExplorerProps) {
           // Determine icon
           let icon = AssetRegistry.XP_NOTEPAD_ICON;
           if (child.type === 'folder') {
-            icon = AssetRegistry.XP_MY_COMPUTER_ICON; // Use folder icon if available, fallback to computer for now
+            icon = AssetRegistry.XP_FOLDER_ICON; 
           } else if ('icon' in child && child.icon) {
             icon = child.icon;
           }
@@ -120,9 +120,23 @@ export function FileExplorer({ initialNodeId = 'root' }: FileExplorerProps) {
           return (
             <div
               key={child.id}
-              className="flex flex-col items-center justify-start w-[80px] p-1 cursor-default group"
+              role="button"
+              tabIndex={0}
+              aria-label={child.name}
+              aria-selected={isSelected}
+              className="flex flex-col items-center justify-start w-[80px] p-1 cursor-default group focus:outline-none focus:ring-1 focus:ring-blue-500 focus:ring-dotted"
               onClick={(e) => { e.stopPropagation(); setSelectedId(child.id); }}
               onDoubleClick={(e) => { e.stopPropagation(); handleDoubleClick(child); }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.stopPropagation();
+                  handleDoubleClick(child);
+                } else if (e.key === ' ' || e.key === 'Spacebar') {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  setSelectedId(child.id);
+                }
+              }}
             >
               <div className={`relative p-1 ${isSelected ? 'xp-icon-selected' : ''}`}>
                 <img src={icon} className="w-8 h-8 object-contain drop-shadow-md mx-auto pointer-events-none" alt="" />

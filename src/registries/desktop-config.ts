@@ -28,7 +28,7 @@ export const desktopConfig: DesktopIconConfig[] = [
   {
     id: 'desktop-notepad',
     label: 'Navigation guide.txt',
-    icon: AssetRegistry.XP_NOTEPAD_ICON,
+    icon: AssetRegistry.ICON_NAVIGATION,
     appId: 'navigation-guide',
     order: 2,
   },
@@ -56,7 +56,7 @@ export const desktopConfig: DesktopIconConfig[] = [
   {
     id: 'desktop-linkedin',
     label: 'LinkedIn',
-    icon: AssetRegistry.XP_INTERNET_ICON,
+    icon: AssetRegistry.ICON_LINKEDIN,
     appId: 'social-viewer',
     launchArgs: { socialId: 'linkedin' },
     order: 6,
@@ -64,7 +64,7 @@ export const desktopConfig: DesktopIconConfig[] = [
   {
     id: 'desktop-github',
     label: 'GitHub',
-    icon: AssetRegistry.XP_INTERNET_ICON,
+    icon: AssetRegistry.ICON_GITHUB,
     appId: 'social-viewer',
     launchArgs: { socialId: 'github' },
     order: 7,
@@ -72,7 +72,7 @@ export const desktopConfig: DesktopIconConfig[] = [
   {
     id: 'desktop-project-1',
     label: 'Audioflow',
-    icon: AssetRegistry.XP_NOTEPAD_ICON,
+    icon: AssetRegistry.ICON_AUDIOFLOW,
     appId: 'project-viewer',
     launchArgs: { projectId: 'placeholder-project-1' },
     order: 8,
@@ -80,21 +80,21 @@ export const desktopConfig: DesktopIconConfig[] = [
   {
     id: 'desktop-snake',
     label: 'Snake',
-    icon: AssetRegistry.XP_GAME_ICON,
+    icon: AssetRegistry.ICON_SNAKE,
     appId: 'snake',
     order: 9,
   },
   {
     id: 'desktop-minesweeper',
     label: 'Minesweeper',
-    icon: AssetRegistry.XP_GAME_ICON,
+    icon: AssetRegistry.ICON_MINESWEEPER,
     appId: 'minesweeper',
     order: 10,
   },
   {
     id: 'desktop-doom',
     label: 'DOOM',
-    icon: AssetRegistry.XP_GAME_ICON,
+    icon: AssetRegistry.ICON_DOOM,
     appId: 'doom',
     order: 11,
   }

@@ -21,6 +21,7 @@ export function EditableNotepad({ windowId: _windowId }: EditableNotepadProps) {
       {/* Content Area */}
       <div className="flex-1 overflow-hidden p-0 bg-white">
         <textarea 
+          aria-label="Text editor"
           className="w-full h-full p-1 focus:outline-none resize-none font-['Lucida_Console',_monospace] text-[13px] leading-relaxed"
           value={content}
           onChange={(e) => setContent(e.target.value)}

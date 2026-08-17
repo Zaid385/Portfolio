@@ -6,15 +6,7 @@ import BlissWallpaper from '../../assets/Wallpapers/Windows XP/Desktop/Bliss.bmp
 import IcoMyComputer from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON16_1.ico';
 import IcoRecycleEmpty from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON32_1.ico';
 import IcoRecycleFull from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON33_1.ico';
-import IcoFolder from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON4_1.ico';
-import IcoFolderOpen from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON5_1.ico';
-import IcoControlPanel from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON22_1.ico';
-import IcoInternet from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON14_1.ico'; // Network/World
-import IcoTextDoc from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON2_1.ico'; // Generic text doc
-import IcoCmd from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON37_1.ico'; // Placeholder for CMD (since cmd.exe is missing)
 import IcoError from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON138_1.ico'; // Placeholder for Error (user32.dll missing)
-import IcoGame from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON44_1.ico'; // Star icon for games
-
 import ProfilePic from '../../assets/Profile/banana-leclerc.png';
 
 // Sounds
@@ -34,14 +26,29 @@ export const AssetRegistry = {
   XP_MY_COMPUTER_ICON: IcoMyComputer,
   XP_RECYCLE_BIN_ICON_EMPTY: IcoRecycleEmpty,
   XP_RECYCLE_BIN_ICON_FULL: IcoRecycleFull,
-  XP_FOLDER_ICON: IcoFolder,
-  XP_FOLDER_OPEN_ICON: IcoFolderOpen,
-  XP_CONTROL_PANEL_ICON: IcoControlPanel,
-  XP_INTERNET_ICON: IcoInternet,
-  XP_NOTEPAD_ICON: IcoTextDoc,
-  XP_COMMAND_PROMPT_ICON: IcoCmd,
+  XP_FOLDER_ICON: '/assets/Folder_Open.png',
+  XP_FOLDER_OPEN_ICON: '/assets/Folder_Open.png',
+  XP_CONTROL_PANEL_ICON: '/assets/Control_Panel.png',
+  XP_INTERNET_ICON: '/assets/Browser_Internet.png',
+  XP_NOTEPAD_ICON: '/assets/Notepad.png',
+  XP_COMMAND_PROMPT_ICON: '/assets/Command Prompt.ico',
   XP_ERROR_ICON: IcoError,
-  XP_GAME_ICON: IcoGame,
+  XP_GAME_ICON: '/assets/pngwing.com.png',
+  
+  // Custom specific icons
+  ICON_SNAKE: '/assets/snake.png',
+  ICON_DOOM: '/assets/Doom.png',
+  ICON_MINESWEEPER: '/assets/pngwing.com.png',
+  ICON_RESUME: '/assets/resume.ico',
+  ICON_GITHUB: '/assets/GitHub_Invertocat_Black.svg',
+  ICON_LINKEDIN: '/assets/LI-In-Bug.png',
+  ICON_NAVIGATION: '/assets/navigation-guide.ico',
+  ICON_RESON: '/assets/Reson-logo.svg',
+  ICON_AUDIOFLOW: '/assets/AudioFLow_icon_green.svg',
+  ICON_WIFI: '/assets/wifi.png',
+  ICON_BLUETOOTH: '/assets/bluetooth.png',
+  ICON_DRIVE: '/assets/Drive_HardDisk.png',
+  ICON_DOCUMENT: '/assets/File_Document.png',
   PROFILE_PIC: ProfilePic,
 
   // Sounds

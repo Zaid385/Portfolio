@@ -38,7 +38,11 @@ export function StartMenu() {
       />
       
       {/* Start Menu Container */}
-      <div className="absolute bottom-[40px] left-0 w-[380px] bg-white rounded-tr-lg border-2 border-[#003399] flex flex-col shadow-[2px_2px_10px_rgba(0,0,0,0.5)] z-[9999] select-none text-black">
+      <div 
+        role="menu"
+        aria-label="Start menu"
+        className="absolute bottom-[40px] left-0 w-[380px] bg-white rounded-tr-lg border-2 border-[#003399] flex flex-col shadow-[2px_2px_10px_rgba(0,0,0,0.5)] z-[9999] select-none text-black transition-transform motion-reduce:transition-none"
+      >
         
         {/* Header */}
         <div className="h-[60px] bg-gradient-to-r from-[#245edb] to-[#003399] rounded-tr-sm border-b-2 border-white flex items-center px-2">
@@ -55,6 +59,7 @@ export function StartMenu() {
             {leftEntries.map(entry => (
               <button 
                 key={entry.id}
+                role="menuitem"
                 className="flex items-center px-2 py-2 hover:bg-[#2f71cd] hover:text-white rounded-sm w-full text-left"
                 onClick={() => handleLaunch(entry.appId, entry.launchArgs)}
               >
@@ -72,6 +77,8 @@ export function StartMenu() {
             {rightEntries.map(entry => (
               <div key={entry.id} className="relative group/folder">
                 <button 
+                  role="menuitem"
+                  aria-haspopup={entry.children && entry.children.length > 0 ? 'menu' : undefined}
                   className="flex items-center justify-between px-2 py-2 hover:bg-[#2f71cd] hover:text-white rounded-sm w-full text-left"
                   onClick={() => handleLaunch(entry.appId, entry.launchArgs)}
                 >
@@ -86,10 +93,11 @@ export function StartMenu() {
                 
                 {/* Submenu Flyout */}
                 {entry.children && entry.children.length > 0 && (
-                  <div className="hidden group-hover/folder:flex absolute left-full top-0 ml-1 w-[180px] bg-white border-2 border-[#003399] shadow-[2px_2px_10px_rgba(0,0,0,0.5)] flex-col py-1 z-[10000]">
+                  <div role="menu" className="hidden group-hover/folder:flex absolute left-full top-0 ml-1 w-[180px] bg-white border-2 border-[#003399] shadow-[2px_2px_10px_rgba(0,0,0,0.5)] flex-col py-1 z-[10000]">
                     {entry.children.map(child => (
                       <button 
                         key={child.id}
+                        role="menuitem"
                         className="flex items-center px-4 py-2 hover:bg-[#2f71cd] hover:text-white w-full text-left group/child"
                         onClick={(e) => {
                           e.stopPropagation();

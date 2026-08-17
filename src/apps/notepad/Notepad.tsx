@@ -49,6 +49,9 @@ export function Notepad({ windowId: _windowId }: NotepadProps) {
       {/* Content Area */}
       <div className="flex-1 overflow-auto p-1 bg-white">
         <div 
+          role="document"
+          tabIndex={0}
+          aria-label="Read-only text editor"
           className="w-full h-full p-1 focus:outline-none whitespace-pre-wrap font-['Lucida_Console',_monospace] text-[13px] leading-relaxed cursor-text select-text"
         >
           {GUIDE_TEXT}

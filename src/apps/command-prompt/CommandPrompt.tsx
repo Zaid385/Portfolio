@@ -130,6 +130,7 @@ export function CommandPrompt({ windowId: _windowId }: CommandPromptProps) {
         <input
           ref={inputRef}
           type="text"
+          aria-label="Command input"
           className="flex-1 bg-transparent outline-none text-gray-200 ml-0 border-none p-0 focus:ring-0 focus:outline-none"
           value={input}
           onChange={e => setInput(e.target.value)}

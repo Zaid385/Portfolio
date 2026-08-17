@@ -132,7 +132,7 @@ export const virtualFs: VirtualFilesystem = {
       fileKind: 'document',
       parentId: 'documents-dir',
       openAppId: 'pdf-viewer',
-      icon: AssetRegistry.XP_NOTEPAD_ICON,
+      icon: AssetRegistry.ICON_RESUME,
     },
     'nav-guide-file': {
       id: 'nav-guide-file',
@@ -141,7 +141,7 @@ export const virtualFs: VirtualFilesystem = {
       fileKind: 'text',
       parentId: 'documents-dir',
       openAppId: 'navigation-guide',
-      icon: AssetRegistry.XP_NOTEPAD_ICON,
+      icon: AssetRegistry.ICON_NAVIGATION,
     },
     'downloads-dir': {
       id: 'downloads-dir',
@@ -177,7 +177,7 @@ export const virtualFs: VirtualFilesystem = {
       type: 'app-link',
       parentId: 'games-dir',
       appId: 'snake',
-      icon: AssetRegistry.XP_GAME_ICON,
+      icon: AssetRegistry.ICON_SNAKE,
     },
     'minesweeper-link': {
       id: 'minesweeper-link',
@@ -185,7 +185,7 @@ export const virtualFs: VirtualFilesystem = {
       type: 'app-link',
       parentId: 'games-dir',
       appId: 'minesweeper',
-      icon: AssetRegistry.XP_GAME_ICON,
+      icon: AssetRegistry.ICON_MINESWEEPER,
     },
     'doom-link': {
       id: 'doom-link',
@@ -193,7 +193,7 @@ export const virtualFs: VirtualFilesystem = {
       type: 'app-link',
       parentId: 'games-dir',
       appId: 'doom',
-      icon: AssetRegistry.XP_GAME_ICON,
+      icon: AssetRegistry.ICON_DOOM,
     },
   },
 };

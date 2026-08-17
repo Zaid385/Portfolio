@@ -18,9 +18,18 @@ export function Window({ win }: { win: WindowInstance }) {
     const handlePointerMove = (ev: PointerEvent) => {
       const dx = ev.clientX - startX;
       const dy = ev.clientY - startY;
+      
+      const newX = startPos.x + dx;
+      const newY = startPos.y + dy;
+      
+      // Ensure the title bar remains accessible
+      const maxX = window.innerWidth - 100;
+      const minX = -win.size.width + 100;
+      const maxY = window.innerHeight - 40; // Above taskbar
+      
       store.updateWindowPosition(win.windowId, {
-        x: startPos.x + dx,
-        y: Math.max(0, startPos.y + dy) 
+        x: Math.max(minX, Math.min(maxX, newX)),
+        y: Math.max(0, Math.min(maxY, newY)) 
       });
     };
 
@@ -51,11 +60,15 @@ export function Window({ win }: { win: WindowInstance }) {
 
   return (
     <div 
+      role="dialog"
+      aria-label={win.title}
       className={`absolute flex flex-col bg-[#ece9d8] border rounded-t-md overflow-hidden shadow-[2px_2px_10px_rgba(0,0,0,0.5)]
         ${win.isFocused ? 'border-[#003399]' : 'border-[#6582c5]'}
+        transition-opacity motion-reduce:transition-none
       `}
       style={style}
       onMouseDown={() => store.focusWindow(win.windowId)}
+      tabIndex={-1}
     >
       <div 
         className={`flex items-center justify-between px-1 py-[3px] cursor-default select-none
@@ -70,13 +83,15 @@ export function Window({ win }: { win: WindowInstance }) {
           </span>
         </div>
         
-        <div className="flex space-x-[2px] shrink-0 mr-[2px]">
+        <div className="flex space-x-[2px] shrink-0 mr-[2px]" aria-label="Window controls">
           <button 
+            aria-label="Minimize"
             className="w-[21px] h-[21px] bg-gradient-to-b from-[#286dd4] to-[#1b51ab] hover:brightness-110 border border-white rounded-[3px] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4)] flex items-end justify-center pb-[3px]"
             onClick={() => store.minimizeWindow(win.windowId)}
           ><div className="w-[7px] h-[2px] bg-white font-bold drop-shadow-md"></div></button>
           
           <button 
+            aria-label={win.state === 'maximized' ? 'Restore Down' : 'Maximize'}
             className={`w-[21px] h-[21px] bg-gradient-to-b from-[#286dd4] to-[#1b51ab] hover:brightness-110 border border-white rounded-[3px] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4)] flex items-center justify-center ${!win.isMaximizable ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={() => {
               if (!win.isMaximizable) return;
@@ -95,10 +110,11 @@ export function Window({ win }: { win: WindowInstance }) {
           </button>
           
           <button 
+            aria-label="Close"
             className="w-[21px] h-[21px] bg-gradient-to-b from-[#e5533e] to-[#c23624] hover:brightness-110 border border-white rounded-[3px] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4)] flex items-center justify-center"
             onClick={() => store.closeWindow(win.windowId)}
           >
-             <div className="text-white font-bold text-[15px] leading-none drop-shadow-md pb-[2px]">×</div>
+             <div className="text-white font-bold text-[15px] leading-none drop-shadow-md pb-[2px]" aria-hidden="true">×</div>
           </button>
         </div>
       </div>

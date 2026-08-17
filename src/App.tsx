@@ -21,6 +21,20 @@ function App() {
     }
   }, [systemStatus, closeAllWindows]);
 
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (e.altKey && e.key === 'F4') {
+        e.preventDefault();
+        const activeWindow = useWindowStore.getState().windows.find(w => w.isFocused);
+        if (activeWindow) {
+          useWindowStore.getState().closeWindow(activeWindow.windowId);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, []);
+
   return (
     <div className="w-full h-[100dvh] bg-black text-white overflow-hidden relative">
       {(systemStatus === 'booting' || systemStatus === 'restarting') && (

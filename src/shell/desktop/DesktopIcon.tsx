@@ -10,7 +10,11 @@ interface DesktopIconProps {
 export function DesktopIcon({ config, isSelected, onSelect, onDoubleClick }: DesktopIconProps) {
   return (
     <div 
-      className="w-[74px] flex flex-col items-center group cursor-default"
+      role="button"
+      tabIndex={0}
+      aria-label={config.label}
+      aria-selected={isSelected}
+      className="w-[84px] flex flex-col items-center group cursor-default focus:outline-none focus:ring-1 focus:ring-white focus:ring-dotted"
       onClick={(e) => {
         e.stopPropagation();
         onSelect(config.id, e.ctrlKey || e.metaKey);
@@ -19,12 +23,22 @@ export function DesktopIcon({ config, isSelected, onSelect, onDoubleClick }: Des
         e.stopPropagation();
         onDoubleClick(config.id);
       }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          e.stopPropagation();
+          onDoubleClick(config.id);
+        } else if (e.key === ' ' || e.key === 'Spacebar') {
+          e.stopPropagation();
+          e.preventDefault();
+          onSelect(config.id, e.ctrlKey || e.metaKey);
+        }
+      }}
     >
       <div className={`p-1 ${isSelected ? 'xp-icon-selected' : ''}`}>
         <img 
           src={config.icon} 
           alt={config.label} 
-          className="w-8 h-8 object-contain drop-shadow-md mx-auto pointer-events-none select-none"
+          className="w-12 h-12 object-contain drop-shadow-md mx-auto pointer-events-none select-none"
         />
       </div>
       <div 

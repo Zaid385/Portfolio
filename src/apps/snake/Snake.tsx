@@ -73,18 +73,22 @@ export function Snake({ windowId: _windowId, isFocused, isMinimized }: SnakeProp
       switch (e.key.toLowerCase()) {
         case 'arrowup':
         case 'w':
+          e.preventDefault();
           if (currentDir !== 'DOWN') nextDirRef.current = 'UP';
           break;
         case 'arrowdown':
         case 's':
+          e.preventDefault();
           if (currentDir !== 'UP') nextDirRef.current = 'DOWN';
           break;
         case 'arrowleft':
         case 'a':
+          e.preventDefault();
           if (currentDir !== 'RIGHT') nextDirRef.current = 'LEFT';
           break;
         case 'arrowright':
         case 'd':
+          e.preventDefault();
           if (currentDir !== 'LEFT') nextDirRef.current = 'RIGHT';
           break;
       }

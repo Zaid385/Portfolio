@@ -18,6 +18,9 @@ export function Taskbar() {
       <div className="absolute bottom-0 left-0 right-0 h-[40px] z-[9999] flex text-white select-none bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#245edb] border-t border-[#003399]">
         {/* Start Button */}
         <button 
+          aria-haspopup="menu"
+          aria-expanded={startMenuOpen}
+          aria-label="Start"
           className={`flex items-center h-full px-4 lg:px-6 hover:brightness-110 active:brightness-90 rounded-r-[14px] font-bold text-xl sm:text-2xl italic tracking-wide shadow-[inset_1px_1px_2px_rgba(255,255,255,0.6)] ${
             startMenuOpen 
               ? 'bg-gradient-to-b from-[#2a7a37] to-[#1e5a26] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.6)]' 

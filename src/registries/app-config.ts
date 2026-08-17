@@ -94,7 +94,7 @@ export const appConfig: Record<string, AppConfig> = {
   'snake': {
     id: 'snake',
     title: 'Snake',
-    icon: AssetRegistry.XP_GAME_ICON,
+    icon: AssetRegistry.ICON_SNAKE,
     singleInstance: true,
     defaultWindow: { width: 420, height: 460, resizable: false, maximizable: false },
     category: 'game',
@@ -102,7 +102,7 @@ export const appConfig: Record<string, AppConfig> = {
   'minesweeper': {
     id: 'minesweeper',
     title: 'Minesweeper',
-    icon: AssetRegistry.XP_GAME_ICON,
+    icon: AssetRegistry.ICON_MINESWEEPER,
     singleInstance: true,
     defaultWindow: { width: 178, height: 260, resizable: false, maximizable: false },
     category: 'game',
@@ -110,7 +110,7 @@ export const appConfig: Record<string, AppConfig> = {
   'doom': {
     id: 'doom',
     title: 'DOOM',
-    icon: AssetRegistry.XP_GAME_ICON,
+    icon: AssetRegistry.ICON_DOOM,
     singleInstance: true,
     defaultWindow: { width: 640, height: 480, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
     category: 'game',

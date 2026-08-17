@@ -103,6 +103,7 @@ export function Browser({ windowId: _windowId }: BrowserProps) {
           <div className="flex-1 flex border border-[#7f9db9] bg-white h-[22px] overflow-hidden">
              <input 
               type="text" 
+              aria-label="Address bar"
               className="flex-1 px-2 py-0 outline-none text-sm leading-none"
               value={addressBar}
               onChange={(e) => setAddressBar(e.target.value)}

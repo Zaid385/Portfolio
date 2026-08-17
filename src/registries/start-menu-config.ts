@@ -30,11 +30,11 @@ export const startMenuConfig: StartMenuEntry[] = [
   },
   {
     id: 'sm-notepad',
-    label: 'Notepad',
-    icon: AssetRegistry.XP_NOTEPAD_ICON,
+    label: 'Navigation guide',
+    icon: AssetRegistry.ICON_NAVIGATION,
     appId: 'navigation-guide',
     column: 'left',
-    order: 1,
+    order: 2,
   },
   {
     id: 'sm-notepad-editable',
@@ -42,7 +42,7 @@ export const startMenuConfig: StartMenuEntry[] = [
     icon: AssetRegistry.XP_NOTEPAD_ICON,
     appId: 'notepad',
     column: 'left',
-    order: 2,
+    order: 3,
   },
   {
     id: 'sm-my-computer',
@@ -69,49 +69,40 @@ export const startMenuConfig: StartMenuEntry[] = [
     order: 2,
   },
   {
-    id: 'sm-socials-folder',
-    label: 'Social Profiles',
-    icon: AssetRegistry.XP_FOLDER_ICON,
+    id: 'sm-social-linkedin',
+    label: 'LinkedIn',
+    icon: AssetRegistry.ICON_LINKEDIN,
+    appId: 'social-viewer',
+    launchArgs: { socialId: 'linkedin' },
     column: 'right',
     order: 3,
-    children: [
-      {
-        id: 'sm-social-linkedin',
-        label: 'LinkedIn',
-        icon: AssetRegistry.XP_INTERNET_ICON,
-        appId: 'social-viewer',
-        launchArgs: { socialId: 'linkedin' },
-        column: 'right',
-        order: 0,
-      },
-      {
-        id: 'sm-social-github',
-        label: 'GitHub',
-        icon: AssetRegistry.XP_INTERNET_ICON,
-        appId: 'social-viewer',
-        launchArgs: { socialId: 'github' },
-        column: 'right',
-        order: 1,
-      }
-    ]
   },
   {
-    id: 'sm-projects-folder',
-    label: 'Projects',
-    icon: AssetRegistry.XP_FOLDER_ICON,
+    id: 'sm-social-github',
+    label: 'GitHub',
+    icon: AssetRegistry.ICON_GITHUB,
+    appId: 'social-viewer',
+    launchArgs: { socialId: 'github' },
     column: 'right',
     order: 4,
-    children: [
-      {
-        id: 'sm-project-1',
-        label: 'Audioflow',
-        icon: AssetRegistry.XP_NOTEPAD_ICON,
-        appId: 'project-viewer',
-        launchArgs: { projectId: 'placeholder-project-1' },
-        column: 'right',
-        order: 0,
-      }
-    ]
+  },
+  {
+    id: 'sm-project-1',
+    label: 'Audioflow',
+    icon: AssetRegistry.ICON_AUDIOFLOW,
+    appId: 'project-viewer',
+    launchArgs: { projectId: 'placeholder-project-1' },
+    column: 'right',
+    order: 5,
+  },
+  {
+    id: 'sm-project-2',
+    label: 'Reson',
+    icon: AssetRegistry.ICON_RESON,
+    appId: 'project-viewer',
+    launchArgs: { projectId: 'placeholder-project-2' },
+    column: 'right',
+    order: 6,
   },
   {
     id: 'sm-games-folder',
@@ -123,7 +114,7 @@ export const startMenuConfig: StartMenuEntry[] = [
       {
         id: 'sm-game-snake',
         label: 'Snake',
-        icon: AssetRegistry.XP_GAME_ICON,
+        icon: AssetRegistry.ICON_SNAKE,
         appId: 'snake',
         column: 'right',
         order: 0,
@@ -131,7 +122,7 @@ export const startMenuConfig: StartMenuEntry[] = [
       {
         id: 'sm-game-minesweeper',
         label: 'Minesweeper',
-        icon: AssetRegistry.XP_GAME_ICON,
+        icon: AssetRegistry.ICON_MINESWEEPER,
         appId: 'minesweeper',
         column: 'right',
         order: 1,
@@ -139,7 +130,7 @@ export const startMenuConfig: StartMenuEntry[] = [
       {
         id: 'sm-game-doom',
         label: 'DOOM',
-        icon: AssetRegistry.XP_GAME_ICON,
+        icon: AssetRegistry.ICON_DOOM,
         appId: 'doom',
         column: 'right',
         order: 2,

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSystemStore } from '../../stores/system-store';
+import { AssetRegistry } from '../../assets/registry';
 
 export function SystemTray() {
   const { 
@@ -26,31 +27,32 @@ export function SystemTray() {
     <div className="h-full flex items-center bg-[#0ea0ed] bg-gradient-to-b from-[#0ea0ed] via-[#33b8fb] to-[#0ea0ed] border-l border-[#003399] px-2 shadow-[inset_1px_0_0_rgba(255,255,255,0.4)] space-x-2 text-white relative flex-shrink-0">
       
       {/* Bluetooth */}
-      <div 
-        className="w-4 h-4 cursor-pointer flex items-center justify-center relative group"
+      <button 
+        aria-label={bluetoothEnabled ? "Bluetooth: On" : "Bluetooth: Off"}
+        className="w-5 h-5 cursor-pointer flex items-center justify-center relative group"
         onClick={toggleBluetooth}
         title={bluetoothEnabled ? "Bluetooth: On" : "Bluetooth: Off"}
       >
-        <span className={`text-[10px] font-bold ${bluetoothEnabled ? 'text-[#000080]' : 'text-gray-200 opacity-50'}`}>B</span>
-      </div>
+        <img 
+          src={AssetRegistry.ICON_BLUETOOTH} 
+          className={`w-full h-full object-contain ${!bluetoothEnabled && 'grayscale opacity-50'}`} 
+          alt="Bluetooth" 
+        />
+      </button>
 
       {/* Wi-Fi */}
-      <div 
-        className="w-4 h-4 cursor-pointer flex items-center justify-center relative group"
+      <button 
+        aria-label={wifiEnabled ? "Wi-Fi: Connected" : "Wi-Fi: Disconnected"}
+        className="w-5 h-5 cursor-pointer flex items-center justify-center relative group"
         onClick={toggleWifi}
         title={wifiEnabled ? "Wi-Fi: Connected" : "Wi-Fi: Disconnected"}
       >
-        {wifiEnabled ? (
-          <div className="flex items-end space-x-[1px] h-3">
-            <div className="w-[2px] h-[4px] bg-[#00ff00]"></div>
-            <div className="w-[2px] h-[6px] bg-[#00ff00]"></div>
-            <div className="w-[2px] h-[8px] bg-[#00ff00]"></div>
-            <div className="w-[2px] h-[10px] bg-[#00ff00]"></div>
-          </div>
-        ) : (
-          <span className="text-[12px] text-red-500 font-bold leading-none select-none">X</span>
-        )}
-      </div>
+        <img 
+          src={AssetRegistry.ICON_WIFI} 
+          className={`w-full h-full object-contain ${!wifiEnabled && 'grayscale opacity-50'}`} 
+          alt="Wi-Fi" 
+        />
+      </button>
 
       {/* Battery */}
       <div 
@@ -65,48 +67,56 @@ export function SystemTray() {
 
       {/* Brightness */}
       <div className="relative">
-        <div 
-          className="w-4 h-4 cursor-pointer flex items-center justify-center font-bold text-yellow-300 text-sm leading-none"
+        <button 
+          aria-label={`Brightness: ${brightness}%`}
+          aria-haspopup="dialog"
+          className="w-6 h-6 cursor-pointer flex items-center justify-center font-bold text-yellow-300 text-2xl leading-none pt-[2px]"
           onClick={() => { setShowBrightness(!showBrightness); setShowVolume(false); }}
           title={`Brightness: ${brightness}%`}
         >
           ☼
-        </div>
+        </button>
         {showBrightness && (
-          <div className="absolute bottom-[30px] right-0 bg-[#ece9d8] border border-[#716f64] p-2 flex flex-col items-center z-50 shadow-md">
-            <span className="text-black text-xs mb-1">Brightness</span>
-            <input 
-              type="range" min="0" max="100" value={brightness} 
-              onChange={(e) => setBrightness(Number(e.target.value))}
-              className="w-24 h-1 cursor-pointer accent-[#245edb]"
-            />
+          <div className="xp-slider-popup">
+            <span className="text-black text-[11px] mb-2 font-['Tahoma']">Brightness</span>
+            <div className="xp-slider-container">
+              <input 
+                type="range" min="0" max="100" value={brightness} 
+                onChange={(e) => setBrightness(Number(e.target.value))}
+                className="xp-vertical-slider"
+              />
+            </div>
           </div>
         )}
       </div>
 
       {/* Volume */}
       <div className="relative">
-        <div 
-          className="w-4 h-4 cursor-pointer flex items-center justify-center"
+        <button 
+          aria-label={isMuted || volume === 0 ? "Volume: Muted" : `Volume: ${volume}%`}
+          aria-haspopup="dialog"
+          className="w-6 h-6 cursor-pointer flex items-center justify-center pt-[1px]"
           onClick={() => { setShowVolume(!showVolume); setShowBrightness(false); }}
           title={isMuted || volume === 0 ? "Volume: Muted" : `Volume: ${volume}%`}
         >
-          <span className={`text-xs font-bold leading-none ${isMuted || volume === 0 ? 'text-red-400' : 'text-white'}`}>
+          <span className={`text-2xl font-bold leading-none ${isMuted || volume === 0 ? 'text-red-400' : 'text-white'}`}>
             {isMuted || volume === 0 ? '✕' : '♪'}
           </span>
-        </div>
+        </button>
         {showVolume && (
-          <div className="absolute bottom-[30px] right-0 bg-[#ece9d8] border border-[#716f64] p-2 flex flex-col items-center z-50 shadow-md">
-            <span className="text-black text-xs mb-1">Volume</span>
-            <input 
-              type="range" min="0" max="100" value={volume} 
-              onChange={(e) => setVolume(Number(e.target.value))}
-              className="w-24 h-1 cursor-pointer mb-2 accent-[#245edb]"
-            />
-            <label className="text-black text-xs flex items-center space-x-1 cursor-pointer">
-              <input type="checkbox" checked={isMuted} onChange={toggleMute} />
-              <span>Mute</span>
-            </label>
+          <div className="xp-slider-popup">
+            <span className="text-black text-[11px] mb-2 font-['Tahoma']">Volume</span>
+            <div className="xp-slider-container">
+              <input 
+                type="range" min="0" max="100" value={volume} 
+                onChange={(e) => setVolume(Number(e.target.value))}
+                className="xp-vertical-slider"
+              />
+            </div>
+            <div className="mt-3 flex items-center space-x-1">
+              <input type="checkbox" checked={isMuted} onChange={toggleMute} className="w-3 h-3 border-gray-400 bg-white" />
+              <span className="text-black text-[11px] font-['Tahoma'] select-none">Mute</span>
+            </div>
           </div>
         )}
       </div>
