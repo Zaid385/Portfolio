@@ -56,6 +56,11 @@ export const useWindowStore = create<WindowState>((set, get) => ({
   }),
 
   launchApp: (appId, launchArgs) => {
+    if (appId === 'external-link' && launchArgs?.url) {
+      window.open(launchArgs.url as string, '_blank', 'noopener,noreferrer');
+      return null;
+    }
+
     const appDef = appConfig[appId];
     if (!appDef) {
       console.error(`Unknown appId: ${appId}`);

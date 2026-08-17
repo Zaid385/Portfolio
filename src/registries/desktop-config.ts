@@ -1,4 +1,5 @@
 import { AssetRegistry } from '../assets/registry';
+import { resumeData } from '../content/resume';
 
 export interface DesktopIconConfig {
   id: string;
@@ -40,6 +41,14 @@ export const desktopConfig: DesktopIconConfig[] = [
     order: 3,
   },
   {
+    id: 'desktop-resume',
+    label: 'Resume.pdf',
+    icon: AssetRegistry.ICON_RESUME,
+    appId: 'external-link',
+    launchArgs: { url: resumeData.documentAsset },
+    order: 3.5,
+  },
+  {
     id: 'desktop-cmd',
     label: 'Command Prompt',
     icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
@@ -57,25 +66,41 @@ export const desktopConfig: DesktopIconConfig[] = [
     id: 'desktop-linkedin',
     label: 'LinkedIn',
     icon: AssetRegistry.ICON_LINKEDIN,
-    appId: 'social-viewer',
-    launchArgs: { socialId: 'linkedin' },
+    appId: 'external-link',
+    launchArgs: { url: 'https://www.linkedin.com/in/zaid-asaad' },
     order: 6,
   },
   {
     id: 'desktop-github',
     label: 'GitHub',
     icon: AssetRegistry.ICON_GITHUB,
-    appId: 'social-viewer',
-    launchArgs: { socialId: 'github' },
+    appId: 'external-link',
+    launchArgs: { url: 'https://github.com/Zaid385' },
     order: 7,
+  },
+  {
+    id: 'desktop-gmail',
+    label: 'Gmail',
+    icon: AssetRegistry.ICON_GMAIL,
+    appId: 'external-link',
+    launchArgs: { url: 'https://mail.google.com/mail/?view=cm&fs=1&to=zaidasaad385@gmail.com' },
+    order: 8,
   },
   {
     id: 'desktop-project-1',
     label: 'Audioflow',
     icon: AssetRegistry.ICON_AUDIOFLOW,
-    appId: 'project-viewer',
-    launchArgs: { projectId: 'placeholder-project-1' },
+    appId: 'iframe-app',
+    launchArgs: { url: 'https://audioflow-4pg4.onrender.com' },
     order: 8,
+  },
+  {
+    id: 'desktop-project-2',
+    label: 'Reson',
+    icon: AssetRegistry.ICON_RESON,
+    appId: 'iframe-app',
+    launchArgs: { url: 'https://reson-4nav.onrender.com' },
+    order: 9,
   },
   {
     id: 'desktop-snake',

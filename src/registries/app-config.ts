@@ -56,7 +56,7 @@ export const appConfig: Record<string, AppConfig> = {
     title: 'Command Prompt',
     icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
     singleInstance: false,
-    defaultWindow: { width: 660, height: 340, resizable: true, maximizable: true, minWidth: 400, minHeight: 200 },
+    defaultWindow: { width: 1100, height: 750, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
     category: 'utility',
   },
   'control-panel': {
@@ -122,5 +122,13 @@ export const appConfig: Record<string, AppConfig> = {
     singleInstance: false,
     defaultWindow: { width: 350, height: 160, resizable: false, maximizable: false },
     category: 'system',
+  },
+  'iframe-app': {
+    id: 'iframe-app',
+    title: 'Application',
+    icon: AssetRegistry.XP_INTERNET_ICON,
+    singleInstance: false,
+    defaultWindow: { width: 800, height: 600, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
+    category: 'internet',
   }
 };

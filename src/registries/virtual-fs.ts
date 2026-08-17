@@ -1,5 +1,5 @@
 import { AssetRegistry } from '../assets/registry';
-import { projectData, socialData } from '../content';
+import { projectData, socialData, resumeData } from '../content';
 
 export type FsNodeType = 'folder' | 'file' | 'app-link';
 
@@ -131,7 +131,8 @@ export const virtualFs: VirtualFilesystem = {
       type: 'file',
       fileKind: 'document',
       parentId: 'documents-dir',
-      openAppId: 'pdf-viewer',
+      openAppId: 'external-link',
+      launchArgs: { url: resumeData.documentAsset },
       icon: AssetRegistry.ICON_RESUME,
     },
     'nav-guide-file': {
@@ -209,8 +210,8 @@ projectData.forEach(p => {
     type: 'file',
     fileKind: 'project-ref',
     parentId: 'projects-dir',
-    openAppId: 'project-viewer',
-    launchArgs: { projectId: p.id },
+    openAppId: 'external-link',
+    launchArgs: { url: p.repoUrl },
     icon: p.icon,
   };
 });
@@ -227,8 +228,8 @@ socialData.forEach(s => {
     type: 'file',
     fileKind: 'social-ref',
     parentId: 'social-dir',
-    openAppId: 'social-viewer',
-    launchArgs: { socialId: s.id },
+    openAppId: 'external-link',
+    launchArgs: { url: s.url },
     icon: s.icon,
   };
 });

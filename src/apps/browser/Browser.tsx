@@ -12,6 +12,9 @@ const isUrl = (str: string) => {
 };
 
 const formatUrl = (str: string) => {
+  if (str.startsWith('/')) {
+    return str; // Allow local asset paths
+  }
   if (isUrl(str)) {
     return str.startsWith('http') ? str : `https://${str}`;
   }
@@ -21,12 +24,14 @@ const formatUrl = (str: string) => {
 
 interface BrowserProps {
   windowId: string;
+  launchArgs?: Record<string, unknown>;
 }
 
-export function Browser({ windowId: _windowId }: BrowserProps) {
-  const [history, setHistory] = useState<string[]>(['https://www.google.com/webhp?igu=1']);
+export function Browser({ windowId: _windowId, launchArgs }: BrowserProps) {
+  const initialUrl = (launchArgs?.url as string) || 'https://www.google.com/webhp?igu=1';
+  const [history, setHistory] = useState<string[]>([initialUrl]);
   const [historyIndex, setHistoryIndex] = useState(0);
-  const [addressBar, setAddressBar] = useState('https://www.google.com/webhp?igu=1');
+  const [addressBar, setAddressBar] = useState(initialUrl);
   const [loading, setLoading] = useState(false);
 
   const currentUrl = history[historyIndex];

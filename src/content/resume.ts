@@ -1,3 +1,5 @@
+import ResumePDF from '../../assets/Zaid-Asaad-Resume.pdf';
+
 export const resumeData = {
-  documentAsset: undefined // Will map to a real asset when provided later
+  documentAsset: ResumePDF
 };

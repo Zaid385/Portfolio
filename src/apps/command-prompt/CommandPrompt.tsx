@@ -13,17 +13,41 @@ interface ScrollbackLine {
   id: string;
   type: 'input' | 'output' | 'error' | 'banner';
   text: string;
+  prompt?: string;
 }
 
 const ASCII_BANNER = `
-  ______    __    __   _______ 
- |__  / |  /  \\  |  | |       \\
-   / /  | / /\\ \\ |  | |  .--.  |
-  / /_  |/ ____ \\|  | |  |  |  |
- /____| /_/    \\_\\__| |__|  |__|
-
+░▒▓████████▓▒░░▒▓██████▓▒░░▒▓█▓▒░▒▓███████▓▒░  
+       ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+     ░▒▓██▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+   ░▒▓██▓▒░  ░▒▓████████▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+ ░▒▓██▓▒░    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓███████▓▒░  
+                                               
+                                               
 Microsoft Windows XP [Version 5.1.2600]
 (C) Copyright 1985-2001 Microsoft Corp.
+
+Welcome. This copy of Windows has been modified by Zaid.
+
+Everything you are about to see was probably
+unnecessarily complicated.
+
+Initializing Zaid...
+Loading projects...
+Loading questionable ideas...
+Loading unfinished projects...
+Done.
+
+Scanning system...
+✓ Skills
+✓ Projects
+✓ GitHub
+✓ Questionable life choices
+✓ 47 open tabs
+
+System ready.
 `;
 
 export function CommandPrompt({ windowId: _windowId }: CommandPromptProps) {
@@ -60,7 +84,7 @@ export function CommandPrompt({ windowId: _windowId }: CommandPromptProps) {
       const currentPath = getFsPath(cwd);
       
       // Echo input
-      setScrollback(prev => [...prev, { id: generateId(), type: 'input', text: `${currentPath}>${input}` }]);
+      setScrollback(prev => [...prev, { id: generateId(), type: 'input', text: input, prompt: `${currentPath}>` }]);
       
       if (cmd) {
         setHistory(prev => [...prev, cmd]);
@@ -104,7 +128,7 @@ export function CommandPrompt({ windowId: _windowId }: CommandPromptProps) {
     } else if (e.key === 'c' && e.ctrlKey) {
       // Ctrl+C behavior
       const currentPath = getFsPath(cwd);
-      setScrollback(prev => [...prev, { id: generateId(), type: 'input', text: `${currentPath}>${input}^C` }]);
+      setScrollback(prev => [...prev, { id: generateId(), type: 'input', text: `${input}^C`, prompt: `${currentPath}>` }]);
       setInput('');
       setHistoryIndex(-1);
     }
@@ -114,24 +138,28 @@ export function CommandPrompt({ windowId: _windowId }: CommandPromptProps) {
   
   return (
     <div 
-      className="flex flex-col w-full h-full bg-black text-gray-200 font-['Lucida_Console',_monospace] text-[14px] p-1 overflow-auto cursor-text select-text"
+      className="flex flex-col w-full h-full bg-black text-gray-200 font-['Lucida_Console',_monospace] text-[14px] p-2 overflow-auto cursor-text select-text"
       onClick={() => inputRef.current?.focus()}
     >
       {scrollback.map(line => (
         <div 
           key={line.id} 
-          className={`whitespace-pre-wrap leading-relaxed ${line.type === 'error' ? 'text-red-400' : ''}`}
+          className={`whitespace-pre-wrap leading-relaxed mb-1 ${line.type === 'error' ? 'text-red-400' : ''}`}
         >
-          {line.text}
+          {line.type === 'input' && line.prompt ? (
+            <><span className="font-bold">{line.prompt}</span>{line.text}</>
+          ) : (
+            line.text
+          )}
         </div>
       ))}
-      <div className="flex">
-        <span className="whitespace-pre">{currentPath}&gt;</span>
+      <div className="flex leading-relaxed mb-1">
+        <span className="whitespace-pre font-bold">{currentPath}&gt;</span>
         <input
           ref={inputRef}
           type="text"
           aria-label="Command input"
-          className="flex-1 bg-transparent outline-none text-gray-200 ml-0 border-none p-0 focus:ring-0 focus:outline-none"
+          className="flex-1 bg-transparent outline-none text-gray-200 ml-0 border-none p-0 focus:ring-0 focus:outline-none font-normal"
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
