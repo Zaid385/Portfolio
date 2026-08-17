@@ -30,6 +30,7 @@ interface WindowState {
   
   launchApp: (appId: string, launchArgs?: Record<string, unknown>) => string | null;
   closeWindow: (windowId: string) => void;
+  closeAllWindows: () => void;
   focusWindow: (windowId: string) => void;
   minimizeWindow: (windowId: string) => void;
   maximizeWindow: (windowId: string) => void;
@@ -108,6 +109,10 @@ export const useWindowStore = create<WindowState>((set, get) => ({
 
     audioManager.play('window-open');
     return windowId;
+  },
+
+  closeAllWindows: () => {
+    set({ windows: [] });
   },
 
   closeWindow: (windowId) => {

@@ -1,7 +1,11 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+type SystemStatus = 'booting' | 'normal' | 'crashed' | 'restarting';
+
 interface SystemState {
+  systemStatus: SystemStatus;
+  crashError?: string;
   wifiEnabled: boolean;
   bluetoothEnabled: boolean;
   batteryLevel: number;
@@ -11,6 +15,10 @@ interface SystemState {
   brightness: number;
   animationsEnabled: boolean;
   soundEffectsEnabled: boolean;
+  
+  triggerCrash: (errorMsg?: string) => void;
+  triggerRestart: () => void;
+  setSystemStatus: (status: SystemStatus) => void;
   
   toggleWifi: () => void;
   toggleBluetooth: () => void;
@@ -24,6 +32,12 @@ interface SystemState {
 export const useSystemStore = create<SystemState>()(
   persist(
     (set) => ({
+      systemStatus: 'booting',
+      crashError: undefined,
+      
+      triggerCrash: (errorMsg = 'A problem has been detected and Windows has been shut down to prevent damage to your computer.') => set({ systemStatus: 'crashed', crashError: errorMsg }),
+      triggerRestart: () => set({ systemStatus: 'restarting' }),
+      setSystemStatus: (status) => set({ systemStatus: status }),
       wifiEnabled: true,
       bluetoothEnabled: false,
       batteryLevel: 85,
@@ -47,6 +61,15 @@ export const useSystemStore = create<SystemState>()(
     }),
     {
       name: 'xp-portfolio:settings',
+      partialize: (state) => ({
+        wifiEnabled: state.wifiEnabled,
+        bluetoothEnabled: state.bluetoothEnabled,
+        volume: state.volume,
+        isMuted: state.isMuted,
+        brightness: state.brightness,
+        animationsEnabled: state.animationsEnabled,
+        soundEffectsEnabled: state.soundEffectsEnabled,
+      }),
     }
   )
 );

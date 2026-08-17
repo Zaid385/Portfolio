@@ -9,6 +9,8 @@ import { SocialApp } from '../apps/social/SocialApp';
 import { ProjectApp } from '../apps/project-viewer/ProjectApp';
 import { Snake } from '../apps/snake/Snake';
 import { Minesweeper } from '../apps/minesweeper/Minesweeper';
+import { DoomApp } from '../apps/doom/DoomApp';
+import { ErrorDialog } from '../apps/error-dialog/ErrorDialog';
 
 export const appComponents: Record<string, ComponentType<any>> = {
   'file-explorer': FileExplorer,
@@ -21,4 +23,6 @@ export const appComponents: Record<string, ComponentType<any>> = {
   'project-viewer': ProjectApp,
   'snake': Snake,
   'minesweeper': Minesweeper,
+  'doom': DoomApp,
+  'error-dialog': ErrorDialog,
 };

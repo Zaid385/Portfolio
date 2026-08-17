@@ -21,7 +21,8 @@ export const desktopConfig: DesktopIconConfig[] = [
     id: 'desktop-recycle-bin',
     label: 'Recycle Bin',
     icon: AssetRegistry.XP_RECYCLE_BIN_ICON_EMPTY,
-    appId: 'recycle-bin',
+    appId: 'file-explorer',
+    launchArgs: { initialPath: 'C:\\Recycled' },
     order: 1,
   },
   {
@@ -71,7 +72,7 @@ export const desktopConfig: DesktopIconConfig[] = [
   {
     id: 'desktop-project-1',
     label: 'Audioflow',
-    icon: AssetRegistry.XP_MY_COMPUTER_ICON,
+    icon: AssetRegistry.XP_NOTEPAD_ICON,
     appId: 'project-viewer',
     launchArgs: { projectId: 'placeholder-project-1' },
     order: 8,
@@ -79,15 +80,22 @@ export const desktopConfig: DesktopIconConfig[] = [
   {
     id: 'desktop-snake',
     label: 'Snake',
-    icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
+    icon: AssetRegistry.XP_GAME_ICON,
     appId: 'snake',
     order: 9,
   },
   {
     id: 'desktop-minesweeper',
     label: 'Minesweeper',
-    icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
+    icon: AssetRegistry.XP_GAME_ICON,
     appId: 'minesweeper',
     order: 10,
+  },
+  {
+    id: 'desktop-doom',
+    label: 'DOOM',
+    icon: AssetRegistry.XP_GAME_ICON,
+    appId: 'doom',
+    order: 11,
   }
 ];

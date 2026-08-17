@@ -15,7 +15,7 @@ export interface AppConfig {
     minWidth?: number;
     minHeight?: number;
   };
-  category?: 'system' | 'portfolio' | 'game' | 'utility';
+  category?: 'system' | 'portfolio' | 'game' | 'utility' | 'internet' | 'project';
 }
 
 export const appConfig: Record<string, AppConfig> = {
@@ -24,15 +24,15 @@ export const appConfig: Record<string, AppConfig> = {
     title: 'My Computer',
     icon: AssetRegistry.XP_MY_COMPUTER_ICON,
     singleInstance: false,
-    defaultWindow: { width: 600, height: 400, resizable: true, maximizable: true, minWidth: 300, minHeight: 200 },
+    defaultWindow: { width: 600, height: 400, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
     category: 'system',
   },
   'recycle-bin': {
     id: 'recycle-bin',
     title: 'Recycle Bin',
     icon: AssetRegistry.XP_RECYCLE_BIN_ICON_EMPTY,
-    singleInstance: true,
-    defaultWindow: { width: 600, height: 400, resizable: true, maximizable: true, minWidth: 300, minHeight: 200 },
+    singleInstance: false,
+    defaultWindow: { width: 600, height: 400, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
     category: 'system',
   },
   'navigation-guide': {
@@ -40,15 +40,15 @@ export const appConfig: Record<string, AppConfig> = {
     title: 'Notepad',
     icon: AssetRegistry.XP_NOTEPAD_ICON,
     singleInstance: false,
-    defaultWindow: { width: 500, height: 450, resizable: true, maximizable: true, minWidth: 200, minHeight: 150 },
+    defaultWindow: { width: 500, height: 400, resizable: true, maximizable: true, minWidth: 300, minHeight: 200 },
     category: 'utility',
   },
   'notepad': {
     id: 'notepad',
-    title: 'Untitled - Notepad',
+    title: 'Notepad',
     icon: AssetRegistry.XP_NOTEPAD_ICON,
     singleInstance: false,
-    defaultWindow: { width: 500, height: 450, resizable: true, maximizable: true, minWidth: 200, minHeight: 150 },
+    defaultWindow: { width: 500, height: 400, resizable: true, maximizable: true, minWidth: 300, minHeight: 200 },
     category: 'utility',
   },
   'command-prompt': {
@@ -56,15 +56,15 @@ export const appConfig: Record<string, AppConfig> = {
     title: 'Command Prompt',
     icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
     singleInstance: false,
-    defaultWindow: { width: 660, height: 400, resizable: true, maximizable: true, minWidth: 400, minHeight: 200 },
-    category: 'system',
+    defaultWindow: { width: 660, height: 340, resizable: true, maximizable: true, minWidth: 400, minHeight: 200 },
+    category: 'utility',
   },
   'control-panel': {
     id: 'control-panel',
     title: 'Control Panel',
-    icon: AssetRegistry.XP_MY_COMPUTER_ICON,
+    icon: AssetRegistry.XP_CONTROL_PANEL_ICON,
     singleInstance: true,
-    defaultWindow: { width: 700, height: 500, resizable: true, maximizable: true, minWidth: 500, minHeight: 400 },
+    defaultWindow: { width: 600, height: 400, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
     category: 'system',
   },
   'browser': {
@@ -73,38 +73,54 @@ export const appConfig: Record<string, AppConfig> = {
     icon: AssetRegistry.XP_INTERNET_ICON,
     singleInstance: false,
     defaultWindow: { width: 800, height: 600, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
-    category: 'utility',
+    category: 'internet',
   },
   'social-viewer': {
     id: 'social-viewer',
     title: 'Social Profile',
     icon: AssetRegistry.XP_INTERNET_ICON,
     singleInstance: false,
-    defaultWindow: { width: 700, height: 500, resizable: true, maximizable: true, minWidth: 500, minHeight: 400 },
-    category: 'portfolio',
+    defaultWindow: { width: 800, height: 600, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
+    category: 'internet',
   },
   'project-viewer': {
     id: 'project-viewer',
-    title: 'Project Viewer',
-    icon: AssetRegistry.XP_MY_COMPUTER_ICON,
+    title: 'Project Details',
+    icon: AssetRegistry.XP_FOLDER_ICON,
     singleInstance: false,
-    defaultWindow: { width: 800, height: 600, resizable: true, maximizable: true, minWidth: 600, minHeight: 500 },
-    category: 'portfolio',
+    defaultWindow: { width: 800, height: 600, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
+    category: 'project',
   },
   'snake': {
     id: 'snake',
     title: 'Snake',
-    icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
+    icon: AssetRegistry.XP_GAME_ICON,
     singleInstance: true,
-    defaultWindow: { width: 420, height: 480, resizable: false, maximizable: false },
+    defaultWindow: { width: 420, height: 460, resizable: false, maximizable: false },
     category: 'game',
   },
   'minesweeper': {
     id: 'minesweeper',
     title: 'Minesweeper',
-    icon: AssetRegistry.XP_COMMAND_PROMPT_ICON, // Placeholder until asset mapped
+    icon: AssetRegistry.XP_GAME_ICON,
     singleInstance: true,
-    defaultWindow: { width: 620, height: 430, resizable: false, maximizable: false },
+    defaultWindow: { width: 178, height: 260, resizable: false, maximizable: false },
     category: 'game',
+  },
+  'doom': {
+    id: 'doom',
+    title: 'DOOM',
+    icon: AssetRegistry.XP_GAME_ICON,
+    singleInstance: true,
+    defaultWindow: { width: 640, height: 480, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
+    category: 'game',
+  },
+  'error-dialog': {
+    id: 'error-dialog',
+    title: 'System Error',
+    icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
+    singleInstance: false,
+    defaultWindow: { width: 350, height: 160, resizable: false, maximizable: false },
+    category: 'system',
   }
 };

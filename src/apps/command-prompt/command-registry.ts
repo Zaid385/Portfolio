@@ -50,7 +50,18 @@ commands.push({
 commands.push({
   name: 'games',
   description: 'Lists available games.',
-  execute: () => ({ output: 'Available games: Snake, Minesweeper. Type "open <game>" or find it on the Desktop.' })
+  execute: () => ({ output: 'Available games: Snake, Minesweeper, DOOM. Type "open <game>" or find it on the Desktop.' })
+});
+
+commands.push({
+  name: 'win32_crash',
+  description: '???',
+  execute: () => {
+    import('../../stores/system-store').then(module => {
+      module.useSystemStore.getState().triggerCrash('MANUALLY_INITIATED_CRASH');
+    });
+    return { output: 'Initiating system crash...' };
+  }
 });
 
 commands.push({

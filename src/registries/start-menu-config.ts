@@ -63,7 +63,7 @@ export const startMenuConfig: StartMenuEntry[] = [
   {
     id: 'sm-control-panel',
     label: 'Control Panel',
-    icon: AssetRegistry.XP_MY_COMPUTER_ICON, // Using computer icon as placeholder
+    icon: AssetRegistry.XP_CONTROL_PANEL_ICON,
     appId: 'control-panel',
     column: 'right',
     order: 2,
@@ -71,7 +71,7 @@ export const startMenuConfig: StartMenuEntry[] = [
   {
     id: 'sm-socials-folder',
     label: 'Social Profiles',
-    icon: AssetRegistry.XP_INTERNET_ICON, // Directory icon usually, use internet for now
+    icon: AssetRegistry.XP_FOLDER_ICON,
     column: 'right',
     order: 3,
     children: [
@@ -98,14 +98,14 @@ export const startMenuConfig: StartMenuEntry[] = [
   {
     id: 'sm-projects-folder',
     label: 'Projects',
-    icon: AssetRegistry.XP_MY_COMPUTER_ICON,
+    icon: AssetRegistry.XP_FOLDER_ICON,
     column: 'right',
     order: 4,
     children: [
       {
         id: 'sm-project-1',
         label: 'Audioflow',
-        icon: AssetRegistry.XP_MY_COMPUTER_ICON,
+        icon: AssetRegistry.XP_NOTEPAD_ICON,
         appId: 'project-viewer',
         launchArgs: { projectId: 'placeholder-project-1' },
         column: 'right',
@@ -116,14 +116,14 @@ export const startMenuConfig: StartMenuEntry[] = [
   {
     id: 'sm-games-folder',
     label: 'Games',
-    icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
+    icon: AssetRegistry.XP_FOLDER_ICON,
     column: 'right',
     order: 5,
     children: [
       {
         id: 'sm-game-snake',
         label: 'Snake',
-        icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
+        icon: AssetRegistry.XP_GAME_ICON,
         appId: 'snake',
         column: 'right',
         order: 0,
@@ -131,10 +131,18 @@ export const startMenuConfig: StartMenuEntry[] = [
       {
         id: 'sm-game-minesweeper',
         label: 'Minesweeper',
-        icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
+        icon: AssetRegistry.XP_GAME_ICON,
         appId: 'minesweeper',
         column: 'right',
         order: 1,
+      },
+      {
+        id: 'sm-game-doom',
+        label: 'DOOM',
+        icon: AssetRegistry.XP_GAME_ICON,
+        appId: 'doom',
+        column: 'right',
+        order: 2,
       }
     ]
   }
