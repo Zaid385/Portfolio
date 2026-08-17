@@ -43,6 +43,14 @@ export const appConfig: Record<string, AppConfig> = {
     defaultWindow: { width: 800, height: 600, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
     category: 'utility',
   },
+  'about-me': {
+    id: 'about-me',
+    title: 'About Me',
+    icon: AssetRegistry.ICON_ABOUT_ME,
+    singleInstance: true,
+    defaultWindow: { width: 700, height: 550, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
+    category: 'utility',
+  },
   'notepad': {
     id: 'notepad',
     title: 'Notepad',
@@ -96,7 +104,7 @@ export const appConfig: Record<string, AppConfig> = {
     title: 'Snake',
     icon: AssetRegistry.ICON_SNAKE,
     singleInstance: true,
-    defaultWindow: { width: 420, height: 460, resizable: false, maximizable: false },
+    defaultWindow: { width: 550, height: 600, resizable: true, maximizable: true, minWidth: 350, minHeight: 400 },
     category: 'game',
   },
   'minesweeper': {
@@ -104,7 +112,7 @@ export const appConfig: Record<string, AppConfig> = {
     title: 'Minesweeper',
     icon: AssetRegistry.ICON_MINESWEEPER,
     singleInstance: true,
-    defaultWindow: { width: 178, height: 260, resizable: false, maximizable: false },
+    defaultWindow: { width: 520, height: 580, resizable: true, maximizable: true, minWidth: 400, minHeight: 450 },
     category: 'game',
   },
   'doom': {

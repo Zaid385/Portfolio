@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { BootController } from './boot/BootController';
 import { useSystemStore } from './stores/system-store';
 import { useWindowStore } from './stores/window-store';
@@ -15,6 +15,7 @@ function App() {
   const brightness = useSystemStore(state => state.brightness);
   const closeAllWindows = useWindowStore(state => state.closeAllWindows);
   const darkenOpacity = 0.95 - (brightness / 100) * 0.95;
+  const hasAutoOpened = useRef(false);
 
   useEffect(() => {
     if (systemStatus === 'restarting') {
@@ -44,6 +45,13 @@ function App() {
           onBootComplete={() => {
             setSystemStatus('normal');
             audioManager.play('startup');
+            // Auto-open Navigation Guide on first login of this browser session
+            if (!hasAutoOpened.current) {
+              hasAutoOpened.current = true;
+              setTimeout(() => {
+                useWindowStore.getState().launchApp('navigation-guide');
+              }, 800); // Small delay so the desktop renders first
+            }
           }} 
         />
       )}

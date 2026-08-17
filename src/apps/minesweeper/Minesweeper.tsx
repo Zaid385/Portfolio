@@ -7,9 +7,10 @@ interface MinesweeperProps {
   isMinimized?: boolean;
 }
 
+// Intermediate difficulty
 const ROWS = 16;
-const COLS = 30;
-const MINES = 99;
+const COLS = 16;
+const MINES = 40;
 
 type CellState = {
   isMine: boolean;
@@ -25,10 +26,11 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
   const [status, setStatus] = useState<GameStatus>('idle');
   const [minesLeft, setMinesLeft] = useState(MINES);
   const [time, setTime] = useState(0);
+  const [pressedCell, setPressedCell] = useState<{r: number, c: number} | null>(null);
+  const [smileyPressed, setSmileyPressed] = useState(false);
   
   const timerRef = useRef<number | null>(null);
 
-  // Initialize empty grid
   useEffect(() => {
     initGrid();
   }, []);
@@ -51,10 +53,10 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
     setStatus('idle');
     setMinesLeft(MINES);
     setTime(0);
+    setPressedCell(null);
     if (timerRef.current) clearInterval(timerRef.current);
   };
 
-  // Start timer
   useEffect(() => {
     if (status === 'playing' && !isMinimized) {
       timerRef.current = window.setInterval(() => {
@@ -74,14 +76,12 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
       const r = Math.floor(Math.random() * ROWS);
       const c = Math.floor(Math.random() * COLS);
       
-      // Avoid placing mine on first click or if already a mine
       if (!currentGrid[r][c].isMine && !(r === firstR && c === firstC)) {
         currentGrid[r][c].isMine = true;
         minesPlaced++;
       }
     }
 
-    // Calculate neighbors
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
         if (!currentGrid[r][c].isMine) {
@@ -101,6 +101,30 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
     }
   };
 
+  const handleCellMouseDown = (e: React.MouseEvent, r: number, c: number) => {
+    if (e.button !== 0 || status === 'won' || status === 'lost') return;
+    if (!grid[r][c].isRevealed && !grid[r][c].isFlagged) {
+      setPressedCell({r, c});
+    }
+  };
+
+  const handleCellMouseEnter = (r: number, c: number) => {
+    if (pressedCell && !grid[r][c].isRevealed && !grid[r][c].isFlagged) {
+      setPressedCell({r, c});
+    }
+  };
+
+  const handleCellMouseLeave = () => {
+    if (pressedCell) {
+      setPressedCell(null);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setPressedCell(null);
+    setSmileyPressed(false);
+  };
+
   const revealCell = (r: number, c: number) => {
     if (status === 'won' || status === 'lost') return;
     
@@ -114,11 +138,9 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
     if (newGrid[r][c].isRevealed || newGrid[r][c].isFlagged) return;
 
     if (newGrid[r][c].isMine) {
-      // Game over
       newGrid[r][c].isRevealed = true;
       setStatus('lost');
       audioManager.play('error');
-      // Reveal all mines
       newGrid.forEach(row => row.forEach(cell => {
         if (cell.isMine) cell.isRevealed = true;
       }));
@@ -126,7 +148,6 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
       return;
     }
 
-    // Flood fill
     const stack = [[r, c]];
     while (stack.length > 0) {
       const [currR, currC] = stack.pop()!;
@@ -162,13 +183,14 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
     if (!cell.isFlagged && minesLeft > 0) {
       cell.isFlagged = true;
       setMinesLeft(prev => prev - 1);
+      audioManager.play('click');
     } else if (cell.isFlagged) {
       cell.isFlagged = false;
       setMinesLeft(prev => prev + 1);
+      audioManager.play('click');
     }
 
     setGrid(newGrid);
-    audioManager.play('click');
   };
 
   const checkWinCondition = (currentGrid: CellState[][]) => {
@@ -182,7 +204,6 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
     if (unrevealedSafeCells === 0) {
       setStatus('won');
       audioManager.play('notification');
-      // Auto flag remaining mines
       const newGrid = [...currentGrid.map(row => [...row])];
       newGrid.forEach(row => row.forEach(cell => {
         if (cell.isMine) cell.isFlagged = true;
@@ -206,63 +227,76 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
   };
 
   return (
-    <div className="flex flex-col items-center p-2 bg-[#bdbdbd] border-l-2 border-t-2 border-white border-r-2 border-b-2 border-[#7b7b7b] select-none h-full w-full">
-      
-      {/* Header / HUD */}
-      <div className="flex justify-between items-center w-full p-1 bg-[#bdbdbd] border-l-2 border-t-2 border-[#7b7b7b] border-r-2 border-b-2 border-white mb-2 h-[38px]">
-        {/* Mine Counter */}
-        <div 
-          className="bg-black text-red-500 font-mono text-[22px] w-[50px] h-[26px] flex items-center justify-center border-l-2 border-t-2 border-[#7b7b7b] border-r-2 border-b-2 border-white leading-none pt-[2px] tracking-tighter"
-          title="Mines remaining (Right-click cells to place flags)"
-        >
-          {formatLedNumber(minesLeft)}
-        </div>
-
-        {/* Smiley Reset Button */}
-        <button 
-          onClick={initGrid}
-          className="w-[26px] h-[26px] flex items-center justify-center bg-[#bdbdbd] border-l-2 border-t-2 border-white border-r-2 border-b-2 border-[#7b7b7b] active:border-l-[#7b7b7b] active:border-t-[#7b7b7b] active:border-r-white active:border-b-white text-[16px] select-none outline-none pb-[2px]"
-          title="New Game"
-        >
-          {status === 'won' ? '😎' : status === 'lost' ? '😵' : '🙂'}
-        </button>
-
-        {/* Timer */}
-        <div 
-          className="bg-black text-red-500 font-mono text-[22px] w-[50px] h-[26px] flex items-center justify-center border-l-2 border-t-2 border-[#7b7b7b] border-r-2 border-b-2 border-white leading-none pt-[2px] tracking-tighter"
-          title="Time elapsed"
-        >
-          {formatLedNumber(time)}
-        </div>
-      </div>
-
-      {/* Grid */}
-      <div className="bg-[#7b7b7b] border-l-2 border-t-2 border-[#7b7b7b] border-r-2 border-b-2 border-white p-[1px]">
-        {grid.map((row, r) => (
-          <div key={r} className="flex">
-            {row.map((cell, c) => (
-              <div 
-                key={`${r}-${c}`}
-                onClick={() => revealCell(r, c)}
-                onContextMenu={(e) => toggleFlag(e, r, c)}
-                className={`
-                  w-5 h-5 flex items-center justify-center font-bold text-sm select-none
-                  ${cell.isRevealed 
-                    ? 'bg-[#bdbdbd] border-r border-b border-[#7b7b7b] border-t border-l border-[#bdbdbd]' 
-                    : 'bg-[#bdbdbd] border-t-2 border-l-2 border-white border-r-2 border-b-2 border-[#7b7b7b] hover:bg-[#c0c0c0]'
-                  }
-                `}
-                style={{ color: cell.isRevealed ? getNumberColor(cell.neighborMines) : 'black' }}
-              >
-                {cell.isRevealed && !cell.isMine && cell.neighborMines > 0 && cell.neighborMines}
-                {cell.isRevealed && cell.isMine && !cell.isFlagged && '💣'}
-                {cell.isFlagged && !cell.isRevealed && '🚩'}
-                {status === 'lost' && !cell.isRevealed && cell.isMine && !cell.isFlagged && '💣'}
-                {status === 'lost' && cell.isFlagged && !cell.isMine && '❌'}
-              </div>
-            ))}
+    <div 
+      className="flex flex-col items-center justify-center p-4 bg-[#bdbdbd] select-none h-full w-full font-sans"
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+    >
+      <div className="bg-[#bdbdbd] border-l-[3px] border-t-[3px] border-white border-r-[3px] border-b-[3px] border-[#7b7b7b] p-2 inline-flex flex-col shadow-sm">
+        
+        {/* Header / HUD */}
+        <div className="flex justify-between items-center p-[6px] bg-[#bdbdbd] border-l-[2px] border-t-[2px] border-[#7b7b7b] border-r-[2px] border-b-[2px] border-white mb-[8px] h-[50px]">
+          {/* Mine Counter */}
+          <div className="bg-black text-[#ff0000] font-mono text-[28px] w-[60px] h-[36px] flex items-center justify-center border-l-[2px] border-t-[2px] border-[#7b7b7b] border-r-[2px] border-b-[2px] border-white leading-none pt-[2px]">
+            {formatLedNumber(minesLeft)}
           </div>
-        ))}
+
+          {/* Smiley Reset Button */}
+          <button 
+            onClick={initGrid}
+            onMouseDown={(e) => { if (e.button === 0) setSmileyPressed(true); }}
+            className={`
+              w-[36px] h-[36px] flex items-center justify-center bg-[#bdbdbd] text-[20px] select-none outline-none pb-[2px]
+              ${smileyPressed 
+                ? 'border-l-[2px] border-t-[2px] border-[#7b7b7b] border-r-[2px] border-b-[2px] border-[#bdbdbd] bg-[#d3d3d3]' 
+                : 'border-l-[2px] border-t-[2px] border-white border-r-[2px] border-b-[2px] border-[#7b7b7b] active:border-l-[2px] active:border-t-[2px] active:border-[#7b7b7b] active:border-r-white active:border-b-white'
+              }
+            `}
+            title="New Game"
+          >
+            {status === 'won' ? '😎' : status === 'lost' ? '😵' : (pressedCell ? '😮' : '🙂')}
+          </button>
+
+          {/* Timer */}
+          <div className="bg-black text-[#ff0000] font-mono text-[28px] w-[60px] h-[36px] flex items-center justify-center border-l-[2px] border-t-[2px] border-[#7b7b7b] border-r-[2px] border-b-[2px] border-white leading-none pt-[2px]">
+            {formatLedNumber(time)}
+          </div>
+        </div>
+
+        {/* Grid Area */}
+        <div className="bg-[#7b7b7b] border-l-[3px] border-t-[3px] border-[#7b7b7b] border-r-[3px] border-b-[3px] border-white flex flex-col">
+          {grid.map((row, r) => (
+            <div key={r} className="flex h-[28px]">
+              {row.map((cell, c) => {
+                const isPressed = pressedCell?.r === r && pressedCell?.c === c;
+                return (
+                  <div 
+                    key={`${r}-${c}`}
+                    onMouseDown={(e) => handleCellMouseDown(e, r, c)}
+                    onMouseEnter={() => handleCellMouseEnter(r, c)}
+                    onMouseLeave={handleCellMouseLeave}
+                    onMouseUp={() => revealCell(r, c)}
+                    onContextMenu={(e) => toggleFlag(e, r, c)}
+                    className={`
+                      w-[28px] h-[28px] flex items-center justify-center font-bold text-[18px] select-none
+                      ${cell.isRevealed || isPressed
+                        ? 'bg-[#bdbdbd] border-r border-b border-[#7b7b7b] border-t border-l border-[#8a8a8a]' 
+                        : 'bg-[#bdbdbd] border-t-[2px] border-l-[2px] border-white border-r-[2px] border-b-[2px] border-[#7b7b7b] hover:brightness-105'
+                      }
+                    `}
+                    style={{ color: cell.isRevealed ? getNumberColor(cell.neighborMines) : 'black' }}
+                  >
+                    {cell.isRevealed && !cell.isMine && cell.neighborMines > 0 && cell.neighborMines}
+                    {cell.isRevealed && cell.isMine && !cell.isFlagged && '💣'}
+                    {cell.isFlagged && !cell.isRevealed && '🚩'}
+                    {status === 'lost' && !cell.isRevealed && cell.isMine && !cell.isFlagged && '💣'}
+                    {status === 'lost' && cell.isFlagged && !cell.isMine && '❌'}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

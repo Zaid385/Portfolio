@@ -1,46 +1,108 @@
 interface NotepadProps {
   windowId: string;
+  launchArgs?: Record<string, unknown>;
 }
 
-const GUIDE_TEXT = `Welcome to my Portfolio OS!
+const GUIDE_TEXT = `═══════════════════════════════════════════════════
+  WELCOME TO ZAID'S COMPUTER
+═══════════════════════════════════════════════════
 
-Here's a quick guide on how to navigate this simulated Windows XP environment:
+Hey! Welcome to my portfolio.
 
-• DESKTOP ICONS: 
-Just like the real deal. Single-click to select, click away to deselect.
+Yes — this entire website is a simulated Windows XP
+computer. Everything you see IS the portfolio.
+The desktop, the apps, the files — it's all real
+(well, simulated-real).
 
-• DOUBLE-CLICKING ITEMS:
-To open applications or folders, double-click the icons on the Desktop or inside My Computer.
+Here's how to get around:
 
-• START MENU:
-Click the classic green "start" button in the bottom left corner to access quick shortcuts and system commands. 
 
-• TASKBAR:
-Open windows will appear here. Click them to minimize, restore, or bring them into focus.
+───── DESKTOP ICONS ─────
 
-• MY COMPUTER (FILE EXPLORER):
-Browse the virtual filesystem to find my projects, resume, and social links. The file system is completely simulated but responds to native XP behaviors like 'Up', 'Back', and 'Forward'.
+Double-click any icon to open it.
+Single-click to select. Click away to deselect.
 
-• OPENING APPLICATIONS:
-Double-click a file and it will open in the appropriate viewer (e.g. PDF viewer, Browser, Project viewer).
 
-• WINDOW MANAGEMENT:
-You can drag windows by their title bars, minimize/maximize them, and resize them freely by dragging the edges and corners!
+───── START MENU ─────
 
-• COMMAND PROMPT:
-A fully functional simulated terminal. Navigate the filesystem, read files, and execute simulated programs!
+Click the green "start" button in the bottom-left.
+You'll find shortcuts to all my apps, projects,
+socials, and system tools.
 
-• GAMES:
-Looking for a break? Play Snake, Minesweeper, or even DOOM, fully integrated into the OS!
 
-• ACCESSIBILITY:
-Use Tab, Enter, Spacebar, and Arrow keys to navigate the desktop, file explorer, and menus without a mouse.
+───── TASKBAR ─────
 
-• EXPLORATION & EASTER EGGS:
-There are hidden surprises in the system. Check the Recycle Bin... but whatever you do, do NOT run secret_project.exe!`;
+Open windows appear here. Click them to switch
+between apps, minimize, or restore.
 
-export function Notepad({ windowId: _windowId }: NotepadProps) {
-  // Read-only notepad viewer for the Navigation Guide
+
+───── MY COMPUTER ─────
+
+Browse the virtual filesystem. You'll find:
+
+  C:\\Projects\\     → My development projects
+  C:\\Social\\       → LinkedIn, GitHub, Gmail
+  C:\\Users\\Zaid\\   → Documents, Resume, this guide
+  C:\\Games\\        → Snake, Minesweeper, DOOM
+  C:\\Recycled\\     → ...don't open secret_project.exe
+
+
+───── PROJECTS ─────
+
+My projects are installed as apps on this computer.
+Find Reson, AudioFlow, and others on the desktop
+or through My Computer → Projects.
+
+
+───── COMMAND PROMPT ─────
+
+A fully working simulated terminal. Try commands
+like dir, cd, help, and open to navigate the
+filesystem and launch apps from the command line.
+
+
+───── GAMES ─────
+
+Need a break? Snake, Minesweeper, and a fully
+playable DOOM are all here. Yes, actual DOOM.
+
+
+───── ABOUT ME ─────
+
+Open "About Me.txt" on the desktop or in
+My Computer → Documents for my full profile,
+skills, education, and project details.
+
+
+───── WINDOW MANAGEMENT ─────
+
+Drag title bars to move windows. Resize from
+edges and corners. Minimize, maximize, restore,
+and close — just like the real thing.
+
+
+───── KEYBOARD NAVIGATION ─────
+
+Tab, Enter, Space, and Arrow keys all work.
+Alt+F4 closes the focused window.
+
+
+───── EASTER EGGS ─────
+
+There are hidden surprises scattered around.
+Explore the Recycle Bin. Try the Command Prompt.
+But seriously — do NOT run secret_project.exe.
+
+You've been warned.
+
+
+═══════════════════════════════════════════════════
+  Enjoy exploring!
+═══════════════════════════════════════════════════`;
+
+export function Notepad({ windowId: _windowId, launchArgs }: NotepadProps) {
+  const content = (launchArgs?.initialContent as string) || GUIDE_TEXT;
+
   return (
     <div className="flex flex-col w-full h-full bg-white text-black text-[13px] font-['Tahoma',_sans-serif]">
       {/* Menu Bar */}
@@ -60,7 +122,7 @@ export function Notepad({ windowId: _windowId }: NotepadProps) {
           aria-label="Read-only text editor"
           className="w-full h-full p-1 focus:outline-none whitespace-pre-wrap font-['Lucida_Console',_monospace] text-[13px] leading-relaxed cursor-text select-text"
         >
-          {GUIDE_TEXT}
+          {content}
         </div>
       </div>
     </div>

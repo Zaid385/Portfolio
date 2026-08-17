@@ -1,5 +1,6 @@
 import { AssetRegistry } from '../assets/registry';
 import { resumeData } from '../content/resume';
+import { aboutMeText } from '../content/about-me';
 
 export interface DesktopIconConfig {
   id: string;
@@ -32,6 +33,14 @@ export const desktopConfig: DesktopIconConfig[] = [
     icon: AssetRegistry.ICON_NAVIGATION,
     appId: 'navigation-guide',
     order: 2,
+  },
+  {
+    id: 'desktop-about-me',
+    label: 'About Me.txt',
+    icon: AssetRegistry.ICON_ABOUT_ME,
+    appId: 'about-me',
+    launchArgs: { initialContent: aboutMeText },
+    order: 2.5,
   },
   {
     id: 'desktop-notepad-editable',

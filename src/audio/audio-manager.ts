@@ -25,39 +25,68 @@ const soundMap: Partial<Record<SoundId, string>> = {
 };
 
 class AudioManager {
-  private context: AudioContext;
-  private masterGain: GainNode;
+  private context: AudioContext | null = null;
+  private masterGain: GainNode | null = null;
   private bufferCache: Map<string, AudioBuffer> = new Map();
-  private isResumed = false;
-  private pendingStartup = false;
+  private isReady = false;
+  private pendingSounds: SoundId[] = [];
 
   constructor() {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-    this.context = new AudioContextClass();
-    this.masterGain = this.context.createGain();
-    this.masterGain.connect(this.context.destination);
-    
-    const resumeHandler = () => {
-      if (!this.isResumed && this.context.state !== 'running') {
-        this.context.resume().then(() => {
-          this.isResumed = true;
-          if (this.pendingStartup) {
-            this.pendingStartup = false;
-            this.play('startup');
-          }
-        }).catch(console.error);
+    // Defer AudioContext creation until first user interaction
+    // to comply with browser autoplay policies
+    const initHandler = () => {
+      if (!this.context) {
+        try {
+          const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+          this.context = new AudioContextClass();
+          this.masterGain = this.context.createGain();
+          this.masterGain.connect(this.context.destination);
+        } catch (e) {
+          console.error('Failed to create AudioContext:', e);
+          return;
+        }
       }
-      window.removeEventListener('click', resumeHandler);
-      window.removeEventListener('keydown', resumeHandler);
-      window.removeEventListener('touchstart', resumeHandler);
+
+      if (this.context.state === 'suspended') {
+        this.context.resume().then(() => {
+          this.isReady = true;
+          this.flushPending();
+          this.removeInitListeners();
+        }).catch(console.error);
+      } else {
+        this.isReady = true;
+        this.flushPending();
+        this.removeInitListeners();
+      }
     };
-    
-    window.addEventListener('click', resumeHandler);
-    window.addEventListener('keydown', resumeHandler);
-    window.addEventListener('touchstart', resumeHandler);
+
+    this._initHandler = initHandler;
+    window.addEventListener('click', initHandler);
+    window.addEventListener('keydown', initHandler);
+    window.addEventListener('touchstart', initHandler);
+    window.addEventListener('pointerdown', initHandler);
+  }
+
+  private _initHandler: (() => void) | null = null;
+
+  private removeInitListeners() {
+    if (this._initHandler) {
+      window.removeEventListener('click', this._initHandler);
+      window.removeEventListener('keydown', this._initHandler);
+      window.removeEventListener('touchstart', this._initHandler);
+      window.removeEventListener('pointerdown', this._initHandler);
+      this._initHandler = null;
+    }
+  }
+
+  private flushPending() {
+    const pending = [...this.pendingSounds];
+    this.pendingSounds = [];
+    pending.forEach(id => this.play(id));
   }
 
   private async getBuffer(url: string): Promise<AudioBuffer | null> {
+    if (!this.context) return null;
     if (this.bufferCache.has(url)) return this.bufferCache.get(url)!;
     
     try {
@@ -74,14 +103,24 @@ class AudioManager {
 
   public async play(soundId: SoundId, options?: { volumeOverride?: number }) {
     const state = useSystemStore.getState();
-    if (!state.soundEffectsEnabled && soundId !== 'startup') return;
+    if (!state.soundEffectsEnabled && soundId !== 'startup' && soundId !== 'shutdown') return;
     if (state.isMuted) return;
 
-    if (this.context.state === 'suspended' || !this.isResumed) {
-      if (soundId === 'startup') {
-        this.pendingStartup = true;
+    // If audio not ready yet, queue important sounds
+    if (!this.isReady || !this.context || !this.masterGain) {
+      if (soundId === 'startup' || soundId === 'shutdown') {
+        this.pendingSounds.push(soundId);
       }
       return;
+    }
+
+    // Re-check context state
+    if (this.context.state === 'suspended') {
+      try {
+        await this.context.resume();
+      } catch {
+        return;
+      }
     }
 
     const url = soundMap[soundId];
@@ -93,7 +132,6 @@ class AudioManager {
     const vol = options?.volumeOverride ?? state.volume;
     const gainValue = Math.pow(vol / 100, 2); // Perceptual volume mapping
     
-    // Prevent cracking by clamping or small ramp
     this.masterGain.gain.setValueAtTime(gainValue, this.context.currentTime);
 
     const source = this.context.createBufferSource();

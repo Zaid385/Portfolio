@@ -16,6 +16,7 @@ import { IframeApp } from '../apps/iframe-app/IframeApp';
 export const appComponents: Record<string, ComponentType<any>> = {
   'file-explorer': FileExplorer,
   'navigation-guide': Notepad,
+  'about-me': Notepad,
   'notepad': EditableNotepad,
   'command-prompt': CommandPrompt,
   'control-panel': ControlPanel,

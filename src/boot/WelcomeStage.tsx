@@ -94,6 +94,16 @@ export function WelcomeStage({ onComplete }: { onComplete: () => void }) {
                 <span className="text-white text-2xl drop-shadow-md" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
                   {userData.name}
                 </span>
+                {!loggingIn && (
+                  <>
+                    <span className="text-white/70 text-sm mt-0.5" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
+                      {userData.title}
+                    </span>
+                    <span className="text-white/50 text-xs mt-1 italic">
+                      My Portfolio Computer
+                    </span>
+                  </>
+                )}
                 {loggingIn && (
                   <span className="text-white/80 text-sm italic mt-1">
                     Loading your personal settings...

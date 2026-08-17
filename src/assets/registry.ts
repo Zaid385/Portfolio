@@ -29,6 +29,7 @@ import IcoWifi from '../../assets/icons-named/wifi.png';
 import IcoBluetooth from '../../assets/icons-named/bluetooth.png';
 import IcoDrive from '../../assets/icons-named/Drive_HardDisk.png';
 import IcoGmail from '../../assets/icons-named/gmail.png';
+import IcoAboutMe from '../../assets/icons-named/about-me.png';
 
 // Sounds
 import SndStartup from '../../assets/Sounds/Windows XP/Windows XP Startup.wav';
@@ -72,6 +73,7 @@ export const AssetRegistry = {
   ICON_DRIVE: IcoDrive,
   ICON_DOCUMENT: IcoTextDoc,
   ICON_GMAIL: IcoGmail,
+  ICON_ABOUT_ME: IcoAboutMe,
   PROFILE_PIC: ProfilePic,
 
   // Sounds

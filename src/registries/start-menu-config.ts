@@ -1,4 +1,5 @@
 import { AssetRegistry } from '../assets/registry';
+import { aboutMeText } from '../content/about-me';
 
 export interface StartMenuEntry {
   id: string;
@@ -35,6 +36,15 @@ export const startMenuConfig: StartMenuEntry[] = [
     appId: 'navigation-guide',
     column: 'left',
     order: 2,
+  },
+  {
+    id: 'sm-about-me',
+    label: 'About Me',
+    icon: AssetRegistry.ICON_ABOUT_ME,
+    appId: 'about-me',
+    launchArgs: { initialContent: aboutMeText },
+    column: 'left',
+    order: 2.5,
   },
   {
     id: 'sm-notepad-editable',

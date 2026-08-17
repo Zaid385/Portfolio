@@ -1,5 +1,6 @@
 import { AssetRegistry } from '../assets/registry';
 import { projectData, socialData, resumeData } from '../content';
+import { aboutMeText } from '../content/about-me';
 
 export type FsNodeType = 'folder' | 'file' | 'app-link';
 
@@ -123,7 +124,17 @@ export const virtualFs: VirtualFilesystem = {
       name: 'Documents',
       type: 'folder',
       parentId: 'zaid-dir',
-      childIds: ['resume-file', 'nav-guide-file'],
+      childIds: ['about-me-file', 'resume-file', 'nav-guide-file'],
+    },
+    'about-me-file': {
+      id: 'about-me-file',
+      name: 'About Me.txt',
+      type: 'file',
+      fileKind: 'text',
+      parentId: 'documents-dir',
+      openAppId: 'about-me',
+      launchArgs: { initialContent: aboutMeText },
+      icon: AssetRegistry.ICON_ABOUT_ME,
     },
     'resume-file': {
       id: 'resume-file',
