@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type SystemStatus = 'booting' | 'normal' | 'crashed' | 'restarting';
+type SystemStatus = 'booting' | 'normal' | 'crashed' | 'restarting' | 'shutting-down';
 
 interface SystemState {
   systemStatus: SystemStatus;

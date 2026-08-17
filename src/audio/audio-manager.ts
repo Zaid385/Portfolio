@@ -2,7 +2,7 @@ import { AssetRegistry } from '../assets/registry';
 import { useSystemStore } from '../stores/system-store';
 
 export type SoundId =
-  | 'startup' | 'error' | 'notification' | 'menu-open' | 'menu-close'
+  | 'startup' | 'shutdown' | 'error' | 'notification' | 'menu-open' | 'menu-close'
   | 'window-open' | 'window-close' | 'click'
   | 'recycle-empty' | 'bsod-trigger'
   | 'minesweeper-flag' | 'minesweeper-reveal' | 'minesweeper-explode'
@@ -10,6 +10,7 @@ export type SoundId =
 
 const soundMap: Partial<Record<SoundId, string>> = {
   'startup': AssetRegistry.SND_STARTUP,
+  'shutdown': AssetRegistry.SND_SHUTDOWN,
   'error': AssetRegistry.SND_ERROR,
   'notification': AssetRegistry.SND_NOTIFY,
   'menu-open': AssetRegistry.SND_START,

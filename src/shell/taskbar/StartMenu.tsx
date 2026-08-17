@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { useWindowStore } from '../../stores/window-store';
+import { useSystemStore } from '../../stores/system-store';
 import { startMenuConfig } from '../../registries/start-menu-config';
 import { AssetRegistry } from '../../assets/registry';
+import { audioManager } from '../../audio/audio-manager';
 
 export function StartMenu() {
   const { startMenuOpen, closeStartMenu, launchApp } = useWindowStore();
@@ -118,7 +120,14 @@ export function StartMenu() {
         {/* Footer */}
         <div className="h-[40px] bg-gradient-to-r from-[#245edb] to-[#003399] flex justify-end items-center px-3 border-t-2 border-white">
            <div className="flex items-center space-x-2">
-             <button className="flex items-center text-white text-xs hover:brightness-110 cursor-default">
+             <button 
+               className="flex items-center text-white text-xs hover:brightness-110 cursor-pointer outline-none"
+               onClick={() => {
+                 closeStartMenu();
+                 audioManager.play('shutdown');
+                 useSystemStore.getState().setSystemStatus('shutting-down');
+               }}
+             >
                <div className="w-6 h-6 bg-[#e8664b] rounded-[3px] mr-1 border border-white flex items-center justify-center font-bold shadow-sm">⏻</div>
                Turn Off Computer
              </button>

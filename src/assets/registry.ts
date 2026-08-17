@@ -39,6 +39,7 @@ import SndMenuCommand from '../../assets/Sounds/Windows XP/Windows XP Menu Comma
 import SndRecycle from '../../assets/Sounds/Windows XP/Windows XP Recycle.wav';
 import SndCriticalStop from '../../assets/Sounds/Windows XP/Windows XP Critical Stop.wav';
 import SndMinimize from '../../assets/Sounds/Windows XP/Windows XP Minimize.wav';
+import SndShutdown from '../../assets/Sounds/Windows XP/Windows XP Shutdown.mp3';
 
 export const AssetRegistry = {
   XP_BOOT_LOADING_BAR: BootGif,
@@ -82,4 +83,5 @@ export const AssetRegistry = {
   SND_RECYCLE: SndRecycle,
   SND_CRITICAL_STOP: SndCriticalStop,
   SND_MINIMIZE: SndMinimize,
+  SND_SHUTDOWN: SndShutdown,
 };

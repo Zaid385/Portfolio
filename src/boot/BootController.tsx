@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { BiosStage } from './BiosStage';
 import { LoadingStage } from './LoadingStage';
+import { WelcomeStage } from './WelcomeStage';
 
-type BootState = 'BIOS' | 'LOADING' | 'DONE';
+type BootState = 'BIOS' | 'LOADING' | 'WELCOME' | 'DONE';
 
 export function BootController({ onBootComplete }: { onBootComplete: () => void }) {
   const [bootState, setBootState] = useState<BootState>('BIOS');
@@ -12,12 +13,15 @@ export function BootController({ onBootComplete }: { onBootComplete: () => void 
   }
 
   return (
-    <div className="fixed inset-0 z-50 w-full h-[100dvh] bg-black cursor-none overflow-hidden m-0 p-0">
+    <div className={`fixed inset-0 z-50 w-full h-[100dvh] bg-black overflow-hidden m-0 p-0 ${bootState === 'WELCOME' ? '' : 'cursor-none'}`}>
       {bootState === 'BIOS' && (
         <BiosStage onComplete={() => setBootState('LOADING')} />
       )}
       {bootState === 'LOADING' && (
-        <LoadingStage onComplete={() => {
+        <LoadingStage onComplete={() => setBootState('WELCOME')} />
+      )}
+      {bootState === 'WELCOME' && (
+        <WelcomeStage onComplete={() => {
            setBootState('DONE');
            onBootComplete();
         }} />

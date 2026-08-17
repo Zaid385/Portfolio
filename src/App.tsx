@@ -7,6 +7,7 @@ import { WindowManager } from './shell/window/WindowManager';
 import { Taskbar } from './shell/taskbar/Taskbar';
 import { audioManager } from './audio/audio-manager';
 import { BSOD } from './shell/bsod/BSOD';
+import { ShutdownScreen } from './shell/ShutdownScreen';
 
 function App() {
   const systemStatus = useSystemStore(state => state.systemStatus);
@@ -57,6 +58,10 @@ function App() {
 
       {systemStatus === 'crashed' && (
         <BSOD />
+      )}
+
+      {systemStatus === 'shutting-down' && (
+        <ShutdownScreen />
       )}
 
       {brightness < 100 && (
