@@ -24,14 +24,20 @@ Browse the virtual filesystem to find my projects, resume, and social links. The
 • OPENING APPLICATIONS:
 Double-click a file and it will open in the appropriate viewer (e.g. PDF viewer, Browser, Project viewer).
 
-• COMMAND PROMPT (Coming Soon):
-A fully functional simulated terminal for navigating the system if you prefer the CLI.
+• WINDOW MANAGEMENT:
+You can drag windows by their title bars, minimize/maximize them, and resize them freely by dragging the edges and corners!
 
-• GAMES (Coming Soon):
-Looking for a break? Try out the classic games hidden in the system.
+• COMMAND PROMPT:
+A fully functional simulated terminal. Navigate the filesystem, read files, and execute simulated programs!
+
+• GAMES:
+Looking for a break? Play Snake, Minesweeper, or even DOOM, fully integrated into the OS!
+
+• ACCESSIBILITY:
+Use Tab, Enter, Spacebar, and Arrow keys to navigate the desktop, file explorer, and menus without a mouse.
 
 • EXPLORATION & EASTER EGGS:
-There are a few hidden surprises. Keep clicking around and have fun!`;
+There are hidden surprises in the system. Check the Recycle Bin... but whatever you do, do NOT run secret_project.exe!`;
 
 export function Notepad({ windowId: _windowId }: NotepadProps) {
   // Read-only notepad viewer for the Navigation Guide

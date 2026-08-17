@@ -37,10 +37,10 @@ export const appConfig: Record<string, AppConfig> = {
   },
   'navigation-guide': {
     id: 'navigation-guide',
-    title: 'Notepad',
-    icon: AssetRegistry.XP_NOTEPAD_ICON,
+    title: 'Navigation guide',
+    icon: AssetRegistry.ICON_NAVIGATION,
     singleInstance: false,
-    defaultWindow: { width: 500, height: 400, resizable: true, maximizable: true, minWidth: 300, minHeight: 200 },
+    defaultWindow: { width: 800, height: 600, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
     category: 'utility',
   },
   'notepad': {

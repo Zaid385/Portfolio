@@ -42,6 +42,59 @@ export function Window({ win }: { win: WindowInstance }) {
     document.addEventListener('pointerup', handlePointerUp);
   };
 
+  const handleResizeDown = (e: React.PointerEvent, direction: string) => {
+    e.stopPropagation();
+    store.focusWindow(win.windowId);
+    if (!win.isResizable || win.state === 'maximized') return;
+
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const startPos = { ...win.position };
+    const startSize = { ...win.size };
+
+    const handlePointerMove = (ev: PointerEvent) => {
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
+
+      let newX = startPos.x;
+      let newY = startPos.y;
+      let newW = startSize.width;
+      let newH = startSize.height;
+
+      if (direction.includes('e')) newW += dx;
+      if (direction.includes('s')) newH += dy;
+      if (direction.includes('w')) {
+        newX += dx;
+        newW -= dx;
+      }
+      if (direction.includes('n')) {
+        newY += dy;
+        newH -= dy;
+      }
+
+      // Enforce min width/height
+      if (newW < win.minWidth) {
+        if (direction.includes('w')) newX -= (win.minWidth - newW);
+        newW = win.minWidth;
+      }
+      if (newH < win.minHeight) {
+        if (direction.includes('n')) newY -= (win.minHeight - newH);
+        newH = win.minHeight;
+      }
+
+      store.updateWindowSize(win.windowId, { width: newW, height: newH });
+      store.updateWindowPosition(win.windowId, { x: newX, y: newY });
+    };
+
+    const handlePointerUp = () => {
+      document.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('pointerup', handlePointerUp);
+    };
+
+    document.addEventListener('pointermove', handlePointerMove);
+    document.addEventListener('pointerup', handlePointerUp);
+  };
+
   const style: React.CSSProperties = {
     zIndex: win.zIndex,
     display: win.state === 'minimized' ? 'none' : 'flex',
@@ -136,6 +189,20 @@ export function Window({ win }: { win: WindowInstance }) {
           </div>
         )}
       </div>
+
+      {win.isResizable && win.state !== 'maximized' && (
+        <>
+          <div className="absolute top-[-4px] left-[-4px] w-3 h-3 cursor-nwse-resize z-50" onPointerDown={e => handleResizeDown(e, 'nw')} />
+          <div className="absolute top-[-4px] right-[-4px] w-3 h-3 cursor-nesw-resize z-50" onPointerDown={e => handleResizeDown(e, 'ne')} />
+          <div className="absolute bottom-[-4px] left-[-4px] w-3 h-3 cursor-nesw-resize z-50" onPointerDown={e => handleResizeDown(e, 'sw')} />
+          <div className="absolute bottom-[-4px] right-[-4px] w-3 h-3 cursor-nwse-resize z-50" onPointerDown={e => handleResizeDown(e, 'se')} />
+          
+          <div className="absolute top-[-4px] left-2 right-2 h-2 cursor-ns-resize z-40" onPointerDown={e => handleResizeDown(e, 'n')} />
+          <div className="absolute bottom-[-4px] left-2 right-2 h-2 cursor-ns-resize z-40" onPointerDown={e => handleResizeDown(e, 's')} />
+          <div className="absolute top-2 bottom-2 left-[-4px] w-2 cursor-ew-resize z-40" onPointerDown={e => handleResizeDown(e, 'w')} />
+          <div className="absolute top-2 bottom-2 right-[-4px] w-2 cursor-ew-resize z-40" onPointerDown={e => handleResizeDown(e, 'e')} />
+        </>
+      )}
     </div>
   );
 }
