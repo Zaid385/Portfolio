@@ -1,5 +1,6 @@
 import type { CommandDefinition, CommandContext, CommandResult } from './types';
 import { getFsPath, type FsFolderNode } from '../../registries/virtual-fs';
+import { userData, projectData, socialData } from '../../content';
 
 const commands: CommandDefinition[] = [];
 
@@ -19,37 +20,37 @@ commands.push({
 commands.push({
   name: 'about',
   description: 'Displays a short bio.',
-  execute: () => ({ output: "Hi, I'm Zaid. I'm a passionate developer building cool things." })
+  execute: () => ({ output: userData.summary })
 });
 
 commands.push({
   name: 'whoami',
   description: 'Prints current user identity.',
-  execute: () => ({ output: 'Zaid - Software Engineer' })
+  execute: () => ({ output: `${userData.name} - ${userData.title}` })
 });
 
 commands.push({
   name: 'skills',
   description: 'Lists technical skills.',
-  execute: () => ({ output: 'React, Node.js, TypeScript, TailwindCSS' })
+  execute: () => ({ output: userData.skills.join(', ') })
 });
 
 commands.push({
   name: 'projects',
   description: 'Lists portfolio projects.',
-  execute: () => ({ output: ['- Audioflow: A cool music project', '- Placeholder Project: Something else'] })
+  execute: () => ({ output: projectData.map(p => `- ${p.name}: ${p.shortDescription}`) })
 });
 
 commands.push({
   name: 'socials',
   description: 'Lists social links.',
-  execute: () => ({ output: ['- LinkedIn: https://linkedin.com/in/zaid', '- GitHub: https://github.com/zaid'] })
+  execute: () => ({ output: socialData.map(s => `- ${s.label}: ${s.url}`) })
 });
 
 commands.push({
   name: 'games',
   description: 'Lists available games.',
-  execute: () => ({ output: 'Available games: Snake. Type "open snake" or find it on the Desktop.' })
+  execute: () => ({ output: 'Available games: Snake, Minesweeper. Type "open <game>" or find it on the Desktop.' })
 });
 
 commands.push({

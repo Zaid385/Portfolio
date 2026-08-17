@@ -38,10 +38,10 @@ export function StartMenu() {
       />
       
       {/* Start Menu Container */}
-      <div className="absolute bottom-[40px] left-0 w-[380px] bg-white rounded-tr-lg border-2 border-[#003399] flex flex-col shadow-[2px_2px_10px_rgba(0,0,0,0.5)] z-[9999] select-none text-black overflow-hidden">
+      <div className="absolute bottom-[40px] left-0 w-[380px] bg-white rounded-tr-lg border-2 border-[#003399] flex flex-col shadow-[2px_2px_10px_rgba(0,0,0,0.5)] z-[9999] select-none text-black">
         
         {/* Header */}
-        <div className="h-[60px] bg-gradient-to-r from-[#245edb] to-[#003399] border-b-2 border-white flex items-center px-2">
+        <div className="h-[60px] bg-gradient-to-r from-[#245edb] to-[#003399] rounded-tr-sm border-b-2 border-white flex items-center px-2">
           <div className="w-12 h-12 rounded-[5px] border-[2px] border-[#95b2ee] p-[2px] flex items-center justify-center shrink-0 shadow-[0_1px_2px_rgba(0,0,0,0.3)]">
             <img src={AssetRegistry.PROFILE_PIC} className="w-full h-full object-cover rounded-[3px]" alt="Zaid" />
           </div>
@@ -68,16 +68,41 @@ export function StartMenu() {
           <div className="w-[1px] bg-gradient-to-b from-transparent via-[#d3e5fa] to-transparent" />
 
           {/* Right Column (Light Blue) */}
-          <div className="w-[160px] bg-[#d3e5fa] border-l border-white flex flex-col py-2 px-1">
+          <div className="w-[160px] bg-[#d3e5fa] border-l border-white flex flex-col py-2 px-1 relative">
             {rightEntries.map(entry => (
-              <button 
-                key={entry.id}
-                className="flex items-center px-2 py-2 hover:bg-[#2f71cd] hover:text-white rounded-sm w-full text-left"
-                onClick={() => handleLaunch(entry.appId, entry.launchArgs)}
-              >
-                <img src={entry.icon} className="w-6 h-6 mr-2 object-contain pointer-events-none" alt="" />
-                <span className="text-sm font-bold text-[#003399] pointer-events-none">{entry.label}</span>
-              </button>
+              <div key={entry.id} className="relative group/folder">
+                <button 
+                  className="flex items-center justify-between px-2 py-2 hover:bg-[#2f71cd] hover:text-white rounded-sm w-full text-left"
+                  onClick={() => handleLaunch(entry.appId, entry.launchArgs)}
+                >
+                  <div className="flex items-center">
+                    <img src={entry.icon} className="w-6 h-6 mr-2 object-contain pointer-events-none" alt="" />
+                    <span className="text-sm font-bold text-[#003399] group-hover/folder:text-white pointer-events-none">{entry.label}</span>
+                  </div>
+                  {entry.children && entry.children.length > 0 && (
+                    <span className="text-xs text-[#003399] group-hover/folder:text-white ml-2">▶</span>
+                  )}
+                </button>
+                
+                {/* Submenu Flyout */}
+                {entry.children && entry.children.length > 0 && (
+                  <div className="hidden group-hover/folder:flex absolute left-full top-0 ml-1 w-[180px] bg-white border-2 border-[#003399] shadow-[2px_2px_10px_rgba(0,0,0,0.5)] flex-col py-1 z-[10000]">
+                    {entry.children.map(child => (
+                      <button 
+                        key={child.id}
+                        className="flex items-center px-4 py-2 hover:bg-[#2f71cd] hover:text-white w-full text-left group/child"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLaunch(child.appId, child.launchArgs);
+                        }}
+                      >
+                        <img src={child.icon} className="w-6 h-6 mr-2 object-contain pointer-events-none" alt="" />
+                        <span className="text-sm text-black group-hover/child:text-white pointer-events-none">{child.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>

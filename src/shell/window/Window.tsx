@@ -1,11 +1,9 @@
 import { useWindowStore, type WindowInstance } from '../../stores/window-store';
-import { appRegistry } from '../../registries/app-registry';
+import { appComponents } from '../../registries/app-components';
 
 export function Window({ win }: { win: WindowInstance }) {
   const store = useWindowStore();
-  const appDef = appRegistry[win.appId];
-  
-  if (win.state === 'minimized') return null;
+  const Component = appComponents[win.appId];
 
   const handlePointerDown = (e: React.PointerEvent) => {
     store.focusWindow(win.windowId);
@@ -37,6 +35,7 @@ export function Window({ win }: { win: WindowInstance }) {
 
   const style: React.CSSProperties = {
     zIndex: win.zIndex,
+    display: win.state === 'minimized' ? 'none' : 'flex',
     ...(win.state === 'maximized' ? {
       top: 0,
       left: 0,
@@ -73,31 +72,46 @@ export function Window({ win }: { win: WindowInstance }) {
         
         <div className="flex space-x-[2px] shrink-0 mr-[2px]">
           <button 
-            className="w-[21px] h-[21px] bg-[#d3e5fa] hover:bg-[#b0cff7] border border-white rounded-[2px] flex items-start justify-center text-black font-bold shadow-sm"
+            className="w-[21px] h-[21px] bg-gradient-to-b from-[#286dd4] to-[#1b51ab] hover:brightness-110 border border-white rounded-[3px] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4)] flex items-end justify-center pb-[3px]"
             onClick={() => store.minimizeWindow(win.windowId)}
-          ><span className="relative -top-1">_</span></button>
+          ><div className="w-[7px] h-[2px] bg-white font-bold drop-shadow-md"></div></button>
           
           <button 
-            className={`w-[21px] h-[21px] bg-[#d3e5fa] hover:bg-[#b0cff7] border border-white rounded-[2px] flex items-center justify-center text-black font-bold shadow-sm ${!win.isMaximizable ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`w-[21px] h-[21px] bg-gradient-to-b from-[#286dd4] to-[#1b51ab] hover:brightness-110 border border-white rounded-[3px] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4)] flex items-center justify-center ${!win.isMaximizable ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={() => {
               if (!win.isMaximizable) return;
               if (win.state === 'maximized') store.restoreWindow(win.windowId);
               else store.maximizeWindow(win.windowId);
             }}
           >
-            <span className="text-[10px]">{win.state === 'maximized' ? '❐' : '□'}</span>
+            {win.state === 'maximized' ? (
+              <div className="relative w-[10px] h-[9px]">
+                <div className="absolute top-0 right-0 w-[7px] h-[6px] border-[1.5px] border-white rounded-[1px] drop-shadow-md"></div>
+                <div className="absolute bottom-0 left-0 w-[7px] h-[6px] border-[1.5px] border-white rounded-[1px] bg-[#1b51ab] drop-shadow-md"></div>
+              </div>
+            ) : (
+              <div className="w-[10px] h-[9px] border-[1.5px] border-white rounded-[1px] border-t-[2.5px] drop-shadow-md"></div>
+            )}
           </button>
           
           <button 
-            className="w-[21px] h-[21px] bg-[#e8664b] hover:bg-[#f08570] text-white border border-white rounded-[2px] flex items-center justify-center font-bold shadow-sm"
+            className="w-[21px] h-[21px] bg-gradient-to-b from-[#e5533e] to-[#c23624] hover:brightness-110 border border-white rounded-[3px] shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4)] flex items-center justify-center"
             onClick={() => store.closeWindow(win.windowId)}
-          >×</button>
+          >
+             <div className="text-white font-bold text-[15px] leading-none drop-shadow-md pb-[2px]">×</div>
+          </button>
         </div>
       </div>
       
       <div className="flex-1 bg-white border-t border-[#003399] overflow-auto relative m-[2px]">
-        {appDef?.component ? (
-          <appDef.component windowId={win.windowId} initialNodeId={win.launchArgs?.initialPath as string | undefined} launchArgs={win.launchArgs} />
+        {Component ? (
+          <Component 
+            windowId={win.windowId} 
+            initialNodeId={win.launchArgs?.initialPath as string | undefined} 
+            launchArgs={win.launchArgs} 
+            isFocused={win.isFocused}
+            isMinimized={win.state === 'minimized'}
+          />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 p-4 text-center">
              <h2 className="text-xl font-bold mb-2 text-gray-600">{win.appId}</h2>

@@ -3,11 +3,13 @@ import { desktopConfig } from '../../registries/desktop-config';
 import { DesktopIcon } from './DesktopIcon';
 import { AssetRegistry } from '../../assets/registry';
 import { useWindowStore } from '../../stores/window-store';
+import { audioManager } from '../../audio/audio-manager';
 
 export function Desktop() {
   const [selectedIcons, setSelectedIcons] = useState<Set<string>>(new Set());
 
   const handleSelect = (id: string, toggle: boolean) => {
+    audioManager.play('click');
     if (toggle) {
       const newSet = new Set(selectedIcons);
       if (newSet.has(id)) newSet.delete(id);
@@ -22,8 +24,11 @@ export function Desktop() {
     setSelectedIcons(new Set());
   };
 
-  const handleDoubleClick = (appId: string) => {
-    useWindowStore.getState().launchApp(appId);
+  const handleDoubleClick = (id: string) => {
+    const config = desktopConfig.find(c => c.id === id);
+    if (config) {
+      useWindowStore.getState().launchApp(config.appId, config.launchArgs);
+    }
   };
 
   return (

@@ -4,6 +4,7 @@ import { useSystemStore } from './stores/system-store';
 import { Desktop } from './shell/desktop/Desktop';
 import { WindowManager } from './shell/window/WindowManager';
 import { Taskbar } from './shell/taskbar/Taskbar';
+import { audioManager } from './audio/audio-manager';
 
 function App() {
   const [bootComplete, setBootComplete] = useState(false);
@@ -13,7 +14,10 @@ function App() {
   return (
     <div className="w-full h-[100dvh] bg-black text-white overflow-hidden relative">
       {!bootComplete && (
-        <BootController onBootComplete={() => setBootComplete(true)} />
+        <BootController onBootComplete={() => {
+          setBootComplete(true);
+          audioManager.play('startup');
+        }} />
       )}
       
       {bootComplete && (

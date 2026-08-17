@@ -4,7 +4,7 @@ interface DesktopIconProps {
   config: DesktopIconConfig;
   isSelected: boolean;
   onSelect: (id: string, toggle: boolean) => void;
-  onDoubleClick: (appId: string) => void;
+  onDoubleClick: (id: string) => void;
 }
 
 export function DesktopIcon({ config, isSelected, onSelect, onDoubleClick }: DesktopIconProps) {
@@ -17,7 +17,7 @@ export function DesktopIcon({ config, isSelected, onSelect, onDoubleClick }: Des
       }}
       onDoubleClick={(e) => {
         e.stopPropagation();
-        onDoubleClick(config.appId);
+        onDoubleClick(config.id);
       }}
     >
       <div className={`p-1 ${isSelected ? 'xp-icon-selected' : ''}`}>

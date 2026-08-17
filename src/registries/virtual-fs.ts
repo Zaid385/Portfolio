@@ -1,4 +1,5 @@
 import { AssetRegistry } from '../assets/registry';
+import { projectData, socialData } from '../content';
 
 export type FsNodeType = 'folder' | 'file' | 'app-link';
 
@@ -128,61 +129,21 @@ export const virtualFs: VirtualFilesystem = {
       name: 'Projects',
       type: 'folder',
       parentId: 'c-drive',
-      childIds: ['project-1-file', 'project-2-file'],
-    },
-    'project-1-file': {
-      id: 'project-1-file',
-      name: 'Audioflow',
-      type: 'file',
-      fileKind: 'project-ref',
-      parentId: 'projects-dir',
-      openAppId: 'project-viewer',
-      launchArgs: { projectId: 'audioflow' },
-      icon: AssetRegistry.XP_NOTEPAD_ICON,
-    },
-    'project-2-file': {
-      id: 'project-2-file',
-      name: 'Placeholder Project',
-      type: 'file',
-      fileKind: 'project-ref',
-      parentId: 'projects-dir',
-      openAppId: 'project-viewer',
-      launchArgs: { projectId: 'placeholder' },
-      icon: AssetRegistry.XP_NOTEPAD_ICON,
+      childIds: [], // Dynamically populated
     },
     'social-dir': {
       id: 'social-dir',
       name: 'Social',
       type: 'folder',
       parentId: 'c-drive',
-      childIds: ['linkedin-file', 'github-file'],
-    },
-    'linkedin-file': {
-      id: 'linkedin-file',
-      name: 'LinkedIn',
-      type: 'file',
-      fileKind: 'social-ref',
-      parentId: 'social-dir',
-      openAppId: 'browser',
-      launchArgs: { socialId: 'linkedin' },
-      icon: AssetRegistry.XP_NOTEPAD_ICON,
-    },
-    'github-file': {
-      id: 'github-file',
-      name: 'GitHub',
-      type: 'file',
-      fileKind: 'social-ref',
-      parentId: 'social-dir',
-      openAppId: 'browser',
-      launchArgs: { socialId: 'github' },
-      icon: AssetRegistry.XP_NOTEPAD_ICON,
+      childIds: [], // Dynamically populated
     },
     'games-dir': {
       id: 'games-dir',
       name: 'Games',
       type: 'folder',
       parentId: 'c-drive',
-      childIds: ['snake-link'],
+      childIds: ['snake-link', 'minesweeper-link'],
     },
     'snake-link': {
       id: 'snake-link',
@@ -192,8 +153,52 @@ export const virtualFs: VirtualFilesystem = {
       appId: 'snake',
       icon: AssetRegistry.XP_NOTEPAD_ICON,
     },
+    'minesweeper-link': {
+      id: 'minesweeper-link',
+      name: 'Minesweeper',
+      type: 'app-link',
+      parentId: 'games-dir',
+      appId: 'minesweeper',
+      icon: AssetRegistry.XP_NOTEPAD_ICON,
+    },
   },
 };
+
+// Hydrate Projects dynamically
+const projectIds: string[] = [];
+projectData.forEach(p => {
+  const fileId = `project-${p.id}-file`;
+  projectIds.push(fileId);
+  virtualFs.nodesById[fileId] = {
+    id: fileId,
+    name: p.name,
+    type: 'file',
+    fileKind: 'project-ref',
+    parentId: 'projects-dir',
+    openAppId: 'project-viewer',
+    launchArgs: { projectId: p.id },
+    icon: p.icon,
+  };
+});
+(virtualFs.nodesById['projects-dir'] as FsFolderNode).childIds = projectIds;
+
+// Hydrate Socials dynamically
+const socialIds: string[] = [];
+socialData.forEach(s => {
+  const fileId = `social-${s.id}-file`;
+  socialIds.push(fileId);
+  virtualFs.nodesById[fileId] = {
+    id: fileId,
+    name: s.label,
+    type: 'file',
+    fileKind: 'social-ref',
+    parentId: 'social-dir',
+    openAppId: 'social-viewer',
+    launchArgs: { socialId: s.id },
+    icon: s.icon,
+  };
+});
+(virtualFs.nodesById['social-dir'] as FsFolderNode).childIds = socialIds;
 
 export function getFsPath(nodeId: string): string {
   if (nodeId === 'root') return 'My Computer';

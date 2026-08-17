@@ -10,6 +10,16 @@ import Icon4 from '../../assets/Icons/Windows XP/ico/shell32.dll/ICON37_1.ico';
 
 import ProfilePic from '../../assets/Profile/banana-leclerc.png';
 
+// Sounds
+import SndStartup from '../../assets/Sounds/Windows XP/Windows XP Startup.wav';
+import SndError from '../../assets/Sounds/Windows XP/Windows XP Error.wav';
+import SndNotify from '../../assets/Sounds/Windows XP/Windows XP Notify.wav';
+import SndStart from '../../assets/Sounds/Windows XP/Windows XP Start.wav';
+import SndMenuCommand from '../../assets/Sounds/Windows XP/Windows XP Menu Command.wav';
+import SndRecycle from '../../assets/Sounds/Windows XP/Windows XP Recycle.wav';
+import SndCriticalStop from '../../assets/Sounds/Windows XP/Windows XP Critical Stop.wav';
+import SndMinimize from '../../assets/Sounds/Windows XP/Windows XP Minimize.wav';
+
 export const AssetRegistry = {
   XP_BOOT_LOADING_BAR: BootGif,
   XP_BOOT_LOGO: WindowsLogoSmall,
@@ -20,4 +30,14 @@ export const AssetRegistry = {
   XP_COMMAND_PROMPT_ICON: Icon4,
   XP_INTERNET_ICON: Icon1,
   PROFILE_PIC: ProfilePic,
+
+  // Sounds
+  SND_STARTUP: SndStartup,
+  SND_ERROR: SndError,
+  SND_NOTIFY: SndNotify,
+  SND_START: SndStart,
+  SND_MENU_COMMAND: SndMenuCommand,
+  SND_RECYCLE: SndRecycle,
+  SND_CRITICAL_STOP: SndCriticalStop,
+  SND_MINIMIZE: SndMinimize,
 };

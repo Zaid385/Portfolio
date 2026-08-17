@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { appRegistry } from '../registries/app-registry';
+import { appConfig } from '../registries/app-config';
+import { audioManager } from '../audio/audio-manager';
 
 export interface WindowInstance {
   windowId: string;
@@ -44,11 +45,17 @@ export const useWindowStore = create<WindowState>((set, get) => ({
   nextZIndex: 100,
   startMenuOpen: false,
 
-  toggleStartMenu: () => set((s) => ({ startMenuOpen: !s.startMenuOpen })),
-  closeStartMenu: () => set({ startMenuOpen: false }),
+  toggleStartMenu: () => set((s) => {
+    audioManager.play(s.startMenuOpen ? 'menu-close' : 'menu-open');
+    return { startMenuOpen: !s.startMenuOpen };
+  }),
+  closeStartMenu: () => set((s) => {
+    if (s.startMenuOpen) audioManager.play('menu-close');
+    return { startMenuOpen: false };
+  }),
 
   launchApp: (appId, launchArgs) => {
-    const appDef = appRegistry[appId];
+    const appDef = appConfig[appId];
     if (!appDef) {
       console.error(`Unknown appId: ${appId}`);
       return null;
@@ -99,10 +106,12 @@ export const useWindowStore = create<WindowState>((set, get) => ({
       nextZIndex: s.nextZIndex + 1,
     }));
 
+    audioManager.play('window-open');
     return windowId;
   },
 
   closeWindow: (windowId) => {
+    audioManager.play('window-close');
     set((s) => {
       const remaining = s.windows.filter(w => w.windowId !== windowId);
       // Auto-focus top-most window

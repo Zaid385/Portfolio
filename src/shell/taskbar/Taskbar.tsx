@@ -2,6 +2,7 @@ import { useWindowStore } from '../../stores/window-store';
 import { AssetRegistry } from '../../assets/registry';
 import { StartMenu } from './StartMenu';
 import { SystemTray } from './SystemTray';
+import { audioManager } from '../../audio/audio-manager';
 
 export function Taskbar() {
   const windows = useWindowStore(state => state.windows);
@@ -42,6 +43,7 @@ export function Taskbar() {
                   : 'bg-gradient-to-b from-[#3c81f3] to-[#245edb] border-[#102b63] hover:brightness-110 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.4)] text-white'
               }`}
               onClick={() => {
+                audioManager.play('click');
                 if (isActive) {
                   minimizeWindow(win.windowId);
                 } else {

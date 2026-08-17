@@ -51,5 +51,43 @@ export const desktopConfig: DesktopIconConfig[] = [
     icon: AssetRegistry.XP_INTERNET_ICON,
     appId: 'browser',
     order: 5,
+  },
+  {
+    id: 'desktop-linkedin',
+    label: 'LinkedIn',
+    icon: AssetRegistry.XP_INTERNET_ICON,
+    appId: 'social-viewer',
+    launchArgs: { socialId: 'linkedin' },
+    order: 6,
+  },
+  {
+    id: 'desktop-github',
+    label: 'GitHub',
+    icon: AssetRegistry.XP_INTERNET_ICON,
+    appId: 'social-viewer',
+    launchArgs: { socialId: 'github' },
+    order: 7,
+  },
+  {
+    id: 'desktop-project-1',
+    label: 'Audioflow',
+    icon: AssetRegistry.XP_MY_COMPUTER_ICON,
+    appId: 'project-viewer',
+    launchArgs: { projectId: 'placeholder-project-1' },
+    order: 8,
+  },
+  {
+    id: 'desktop-snake',
+    label: 'Snake',
+    icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
+    appId: 'snake',
+    order: 9,
+  },
+  {
+    id: 'desktop-minesweeper',
+    label: 'Minesweeper',
+    icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
+    appId: 'minesweeper',
+    order: 10,
   }
 ];
