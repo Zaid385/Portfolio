@@ -1,32 +1,38 @@
-# React + TypeScript + Vite
+# Windows XP Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A fully interactive, web-based simulated Windows XP desktop experience serving as a personal developer portfolio. Built with React, TypeScript, Tailwind CSS, and Vite.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Authentic Windows XP Interface:** Faithfully recreated UI, complete with the Bliss wallpaper, classic start menu, system tray, and draggable/resizable windows.
+- **Simulated Boot Sequence:** Authentic BIOS and loading screens, followed by a classic login screen.
+- **Virtual File System (VFS):** Navigate directories via a fully functional Windows Explorer replica.
+- **Fully Working Applications:**
+  - **Notepad:** View text files (like "About Me" and "Navigation Guide").
+  - **Command Prompt:** Execute simulated commands.
+  - **Browser:** Surf internal "sites" or external links.
+  - **Control Panel:** Adjust simulated settings like brightness and volume.
+- **Classic Games:** Play fully rebuilt versions of Snake and Minesweeper.
+- **WebAssembly DOOM:** Launch and play the classic shareware DOOM directly in the browser.
+- **Dynamic Sound System:** Authentic Windows XP startup, shutdown, and click sound effects powered by the Web Audio API.
+- **Easter Eggs:** Hidden commands and a classic Blue Screen of Death (BSOD) trigger.
 
-## React Compiler
+## Navigation Instructions
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Booting Up:** Wait for the BIOS sequence to complete, or press `F1` / `Spacebar` to skip the boot animation, then click your user profile on the Welcome Screen.
+- **Opening Apps:** Double-click icons on the desktop or launch them via the Start Menu.
+- **Window Management:** Click and drag title bars to move windows. Use the minimize, maximize, and close buttons on the top right.
+- **File Explorer:** Use the "My Computer" icon to browse the Virtual File System. Double-click folders to dive deeper, and use the toolbar navigation buttons to go back/forward.
+- **Games:** Open the "Games" folder on the desktop or use the Start Menu to launch Snake, Minesweeper, or DOOM.
+- **Control Panel:** Access the Control Panel from the Start Menu to toggle settings like sound effects, volume, and screen brightness.
 
-## Expanding the Oxlint configuration
+## Screenshots
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+### Boot Screen
+![Loading Screen](assets/images/loading-screen.png)
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+### Login Screen
+![Login Screen](assets/images/login-scrren.png)
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+### Desktop Experience
+![Desktop](assets/images/desktop.png)
