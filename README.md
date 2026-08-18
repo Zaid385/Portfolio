@@ -1,6 +1,8 @@
-# Windows XP Portfolio
+# Windows XP Themed Portfolio
 
-A fully interactive, web-based simulated Windows XP desktop experience serving as a personal developer portfolio. Built with React, TypeScript, Tailwind CSS, and Vite.
+### 🚀 [Live: zaid-7nl.pages.dev](https://db77a73b.zaid-7nl.pages.dev)
+
+A fully interactive, web-based simulated Windows XP desktop experience serving as personal portfolio. Built with React, TypeScript, Tailwind CSS, and Vite.
 
 ## Features
 
@@ -19,12 +21,11 @@ A fully interactive, web-based simulated Windows XP desktop experience serving a
 
 ## Navigation Instructions
 
-- **Booting Up:** Wait for the BIOS sequence to complete, or press `F1` / `Spacebar` to skip the boot animation, then click your user profile on the Welcome Screen.
+- **Booting Up:** Wait for the BIOS sequence to complete, or press `F1` / `Spacebar` to skip the boot animation, then click the profile on the Welcome Screen.
 - **Opening Apps:** Double-click icons on the desktop or launch them via the Start Menu.
 - **Window Management:** Click and drag title bars to move windows. Use the minimize, maximize, and close buttons on the top right.
 - **File Explorer:** Use the "My Computer" icon to browse the Virtual File System. Double-click folders to dive deeper, and use the toolbar navigation buttons to go back/forward.
-- **Games:** Open the "Games" folder on the desktop or use the Start Menu to launch Snake, Minesweeper, or DOOM.
-- **Control Panel:** Access the Control Panel from the Start Menu to toggle settings like sound effects, volume, and screen brightness.
+- **Games:** Open the games on the desktop by double-clicking on the icons or use the Start Menu to launch Snake, Minesweeper, or DOOM.
 
 ## Screenshots
 
