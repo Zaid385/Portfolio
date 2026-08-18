@@ -1,16 +1,18 @@
 export const userData = {
   name: 'Zaid Asaad',
   title: 'Computer Science Student & Full-Stack Developer',
-  summary: '6th semester Computer Science student at COMSATS University with experience in full-stack web development, real-time networked systems, and audio software. Passionate about backend engineering, networking protocols, and audio/DSP systems.',
+  summary: '6th semester Computer Science student at COMSATS University with experience in full-stack web development, real-time networked systems, and audio software. Passionate about backend engineering, networking protocols, audio/DSP systems and graphics programming',
   skills: [
-    'Node.js', 'Python', 'TypeScript', 'React', 'MongoDB', 
-    'REST API Design', 'TCP Socket Programming', 'Tone.js'
+    'C', 'Java', 'Python', 'Unity', 'Godot', 'SDL',
+    'Node.js', 'TypeScript', 'JavaScript', 'React', 'Vite.js','MongoDB', 
+    'REST API Design', 'TCP Socket Programming', 'Tone.js',
+    'Music Production', 'Bash scripting', 'Figma', 'Git'
   ],
   education: [
     {
       degree: 'Bachelor of Science in Computer Science',
       institution: 'COMSATS University Islamabad, Lahore Campus',
-      duration: '2024 - Present'
+      duration: '2024 - 2027'
     },
     {
       degree: 'Intermediate (HSSC)',
@@ -25,7 +27,6 @@ export const userData = {
   ],
   contact: {
     email: 'zaidasaad385@gmail.com',
-    phone: '+923208669499',
     location: 'Lahore, Pakistan'
   }
 };

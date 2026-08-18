@@ -27,14 +27,6 @@ export const appConfig: Record<string, AppConfig> = {
     defaultWindow: { width: 600, height: 400, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
     category: 'system',
   },
-  'recycle-bin': {
-    id: 'recycle-bin',
-    title: 'Recycle Bin',
-    icon: AssetRegistry.XP_RECYCLE_BIN_ICON_EMPTY,
-    singleInstance: false,
-    defaultWindow: { width: 600, height: 400, resizable: true, maximizable: true, minWidth: 400, minHeight: 300 },
-    category: 'system',
-  },
   'navigation-guide': {
     id: 'navigation-guide',
     title: 'Navigation guide',

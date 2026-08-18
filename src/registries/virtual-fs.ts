@@ -58,10 +58,10 @@ export const virtualFs: VirtualFilesystem = {
     },
     'recycled-dir': {
       id: 'recycled-dir',
-      name: 'Recycled',
+      name: 'Recycle Bin',
       type: 'folder',
       parentId: 'c-drive',
-      childIds: ['secret-project-link', 'recycled-readme-file'],
+      childIds: ['secret-project-link'],
     },
     'secret-project-link': {
       id: 'secret-project-link',
@@ -71,16 +71,6 @@ export const virtualFs: VirtualFilesystem = {
       appId: 'error-dialog',
       launchArgs: { message: 'KERNEL_SECURITY_CHECK_FAILURE: Unauthorized access to classified meme.', type: 'error', triggerCrash: true },
       icon: AssetRegistry.XP_COMMAND_PROMPT_ICON,
-    },
-    'recycled-readme-file': {
-      id: 'recycled-readme-file',
-      name: 'README.txt',
-      type: 'file',
-      fileKind: 'text',
-      parentId: 'recycled-dir',
-      openAppId: 'notepad',
-      launchArgs: { initialContent: 'Please do not run secret_project.exe. The fate of the simulated world depends on it.' },
-      icon: AssetRegistry.XP_NOTEPAD_ICON,
     },
     'users-dir': {
       id: 'users-dir',
@@ -116,7 +106,8 @@ export const virtualFs: VirtualFilesystem = {
       name: 'Recycle Bin',
       type: 'app-link',
       parentId: 'desktop-dir',
-      appId: 'recycle-bin',
+      appId: 'file-explorer',
+      launchArgs: { initialPath: 'recycled-dir' },
       icon: AssetRegistry.XP_RECYCLE_BIN_ICON_EMPTY,
     },
     'documents-dir': {

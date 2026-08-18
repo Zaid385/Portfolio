@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useWindowStore } from '../../stores/window-store';
 import { virtualFs, getFsPath, type FsNode } from '../../registries/virtual-fs';
 import { AssetRegistry } from '../../assets/registry';
+import { audioManager } from '../../audio/audio-manager';
 
 interface FileExplorerProps {
   initialNodeId?: string;
@@ -26,6 +27,7 @@ export function FileExplorer({ initialNodeId = 'root' }: FileExplorerProps) {
 
   const handleBack = () => {
     if (currentIndex > 0) {
+      audioManager.play('click');
       setCurrentIndex(currentIndex - 1);
       setSelectedId(null);
     }
@@ -33,6 +35,7 @@ export function FileExplorer({ initialNodeId = 'root' }: FileExplorerProps) {
 
   const handleForward = () => {
     if (currentIndex < history.length - 1) {
+      audioManager.play('click');
       setCurrentIndex(currentIndex + 1);
       setSelectedId(null);
     }
@@ -40,11 +43,13 @@ export function FileExplorer({ initialNodeId = 'root' }: FileExplorerProps) {
 
   const handleUp = () => {
     if (currentNode && currentNode.parentId) {
+      audioManager.play('click');
       handleNavigate(currentNode.parentId);
     }
   };
 
   const handleDoubleClick = (node: FsNode) => {
+    audioManager.play('click');
     if (node.type === 'folder') {
       handleNavigate(node.id);
     } else if (node.type === 'file' || node.type === 'app-link') {

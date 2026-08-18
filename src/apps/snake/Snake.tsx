@@ -245,7 +245,7 @@ export function Snake({ windowId: _windowId, isFocused, isMinimized }: SnakeProp
         </div>
         <button 
           onClick={resetGame}
-          className="px-4 py-[3px] bg-[#ece9d8] border border-[#716f64] rounded hover:bg-[#c1d2ee] hover:border-[#316ac5] active:bg-[#98b4e2] transition-colors shadow-[1px_1px_0_white_inset]"
+          className="px-4 py-[3px] bg-[#ece9d8] border border-[#716f64] rounded hover:bg-[#c1d2ee] hover:border-[#316ac5] active:bg-[#98b4e2] transition-colors shadow-[1px_1px_0_white_inset] text-black"
         >
           {hasStarted && !gameOver ? 'Restart' : 'New Game'}
         </button>

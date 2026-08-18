@@ -4,7 +4,7 @@ interface NotepadProps {
 }
 
 const GUIDE_TEXT = `═══════════════════════════════════════════════════
-  WELCOME TO ZAID'S COMPUTER
+  WELCOME
 ═══════════════════════════════════════════════════
 
 Hey! Welcome to my portfolio.
@@ -44,7 +44,7 @@ Browse the virtual filesystem. You'll find:
   C:\\Social\\       → LinkedIn, GitHub, Gmail
   C:\\Users\\Zaid\\   → Documents, Resume, this guide
   C:\\Games\\        → Snake, Minesweeper, DOOM
-  C:\\Recycled\\     → ...don't open secret_project.exe
+  C:\\Recycle Bin\\     → ...don't open secret_project.exe
 
 
 ───── PROJECTS ─────

@@ -20,8 +20,6 @@ const soundMap: Partial<Record<SoundId, string>> = {
   'click': AssetRegistry.SND_START,
   'recycle-empty': AssetRegistry.SND_RECYCLE,
   'bsod-trigger': AssetRegistry.SND_CRITICAL_STOP,
-  'snake-eat': AssetRegistry.SND_START,
-  'snake-gameover': AssetRegistry.SND_ERROR,
 };
 
 class AudioManager {
@@ -101,6 +99,121 @@ class AudioManager {
     }
   }
 
+  /**
+   * Attempt to play a synthesized game sound. Returns true if handled.
+   */
+  private playSynthesized(soundId: SoundId, gainValue: number): boolean {
+    if (!this.context) return false;
+    const ctx = this.context;
+    const t = ctx.currentTime;
+
+    switch (soundId) {
+      case 'snake-eat': {
+        // Quick ascending chirp — satisfying "collect" feel
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, t);
+        osc.frequency.exponentialRampToValueAtTime(900, t + 0.07);
+        g.gain.setValueAtTime(gainValue * 0.35, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+        osc.connect(g).connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.1);
+        return true;
+      }
+
+      case 'snake-gameover': {
+        // Three descending tones — classic "failure" jingle
+        const freqs = [440, 330, 220];
+        freqs.forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(freq, t + i * 0.18);
+          g.gain.setValueAtTime(gainValue * 0.2, t + i * 0.18);
+          g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.18 + 0.16);
+          osc.connect(g).connect(ctx.destination);
+          osc.start(t + i * 0.18);
+          osc.stop(t + i * 0.18 + 0.16);
+        });
+        return true;
+      }
+
+      case 'minesweeper-reveal': {
+        // Soft, subtle tick — unobtrusive for frequent clicks
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1200, t);
+        osc.frequency.exponentialRampToValueAtTime(800, t + 0.03);
+        g.gain.setValueAtTime(gainValue * 0.15, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+        osc.connect(g).connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.04);
+        return true;
+      }
+
+      case 'minesweeper-flag': {
+        // Short double-click sound for placing/removing flags
+        [0, 0.06].forEach(offset => {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1000, t + offset);
+          g.gain.setValueAtTime(gainValue * 0.12, t + offset);
+          g.gain.exponentialRampToValueAtTime(0.001, t + offset + 0.03);
+          osc.connect(g).connect(ctx.destination);
+          osc.start(t + offset);
+          osc.stop(t + offset + 0.03);
+        });
+        return true;
+      }
+
+      case 'minesweeper-explode': {
+        // Low boom + noise burst — dramatic mine explosion
+        // Sub-bass boom
+        const boom = ctx.createOscillator();
+        const boomGain = ctx.createGain();
+        boom.type = 'sine';
+        boom.frequency.setValueAtTime(80, t);
+        boom.frequency.exponentialRampToValueAtTime(30, t + 0.4);
+        boomGain.gain.setValueAtTime(gainValue * 0.5, t);
+        boomGain.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+        boom.connect(boomGain).connect(ctx.destination);
+        boom.start(t);
+        boom.stop(t + 0.4);
+
+        // Noise burst for crackle/debris
+        const bufferSize = ctx.sampleRate * 0.3;
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 2);
+        }
+        const noise = ctx.createBufferSource();
+        noise.buffer = noiseBuffer;
+        const noiseGain = ctx.createGain();
+        noiseGain.gain.setValueAtTime(gainValue * 0.35, t);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+        // Bandpass to shape the noise into something more explosion-like
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(600, t);
+        filter.Q.setValueAtTime(0.5, t);
+        noise.connect(filter).connect(noiseGain).connect(ctx.destination);
+        noise.start(t);
+        noise.stop(t + 0.3);
+
+        return true;
+      }
+
+      default:
+        return false;
+    }
+  }
+
   public async play(soundId: SoundId, options?: { volumeOverride?: number }) {
     const state = useSystemStore.getState();
     if (!state.soundEffectsEnabled && soundId !== 'startup' && soundId !== 'shutdown') return;
@@ -123,15 +236,19 @@ class AudioManager {
       }
     }
 
+    const vol = options?.volumeOverride ?? state.volume;
+    const gainValue = Math.pow(vol / 100, 2);
+
+    // Try synthesized game sounds first
+    if (this.playSynthesized(soundId, gainValue)) return;
+
+    // Fall back to file-based sounds
     const url = soundMap[soundId];
     if (!url) return;
 
     const buffer = await this.getBuffer(url);
     if (!buffer) return;
 
-    const vol = options?.volumeOverride ?? state.volume;
-    const gainValue = Math.pow(vol / 100, 2); // Perceptual volume mapping
-    
     this.masterGain.gain.setValueAtTime(gainValue, this.context.currentTime);
 
     const source = this.context.createBufferSource();

@@ -62,7 +62,7 @@ export function LoadingStage({ onComplete }: { onComplete: () => void }) {
       </div>
       
       <div className="absolute bottom-4 left-8 text-left text-[#5a7edc] font-sans text-sm sm:text-xl">
-        <p>Copyright © Made with love, loads of coffee and all nighters :)</p>
+        <p>Copyright © Made with loads of coffee and all nighters :)</p>
       </div>
     </div>
   );

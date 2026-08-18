@@ -24,7 +24,7 @@ export const desktopConfig: DesktopIconConfig[] = [
     label: 'Recycle Bin',
     icon: AssetRegistry.XP_RECYCLE_BIN_ICON_EMPTY,
     appId: 'file-explorer',
-    launchArgs: { initialPath: 'C:\\Recycled' },
+    launchArgs: { initialPath: 'recycled-dir' },
     order: 1,
   },
   {

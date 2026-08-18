@@ -73,7 +73,6 @@ function generateAboutMeText(): string {
   sections.push(divider);
   sections.push('');
   sections.push(`  Email:    ${userData.contact.email}`);
-  sections.push(`  Phone:    ${userData.contact.phone}`);
   socialData.forEach(s => {
     sections.push(`  ${s.label}:${' '.repeat(Math.max(1, 8 - s.label.length))}${s.url}`);
   });

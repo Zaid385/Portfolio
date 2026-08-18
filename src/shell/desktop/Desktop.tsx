@@ -9,7 +9,6 @@ export function Desktop() {
   const [selectedIcons, setSelectedIcons] = useState<Set<string>>(new Set());
 
   const handleSelect = (id: string, toggle: boolean) => {
-    audioManager.play('click');
     if (toggle) {
       const newSet = new Set(selectedIcons);
       if (newSet.has(id)) newSet.delete(id);
@@ -27,6 +26,7 @@ export function Desktop() {
   const handleDoubleClick = (id: string) => {
     const config = desktopConfig.find(c => c.id === id);
     if (config) {
+      audioManager.play('click');
       useWindowStore.getState().launchApp(config.appId, config.launchArgs);
     }
   };

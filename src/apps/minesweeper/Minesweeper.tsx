@@ -140,7 +140,7 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
     if (newGrid[r][c].isMine) {
       newGrid[r][c].isRevealed = true;
       setStatus('lost');
-      audioManager.play('error');
+      audioManager.play('minesweeper-explode');
       newGrid.forEach(row => row.forEach(cell => {
         if (cell.isMine) cell.isRevealed = true;
       }));
@@ -168,7 +168,7 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
     }
 
     setGrid(newGrid);
-    audioManager.play('click');
+    audioManager.play('minesweeper-reveal');
     checkWinCondition(newGrid);
   };
 
@@ -183,11 +183,11 @@ export function Minesweeper({ isFocused: _isFocused, isMinimized }: MinesweeperP
     if (!cell.isFlagged && minesLeft > 0) {
       cell.isFlagged = true;
       setMinesLeft(prev => prev - 1);
-      audioManager.play('click');
+      audioManager.play('minesweeper-flag');
     } else if (cell.isFlagged) {
       cell.isFlagged = false;
       setMinesLeft(prev => prev + 1);
-      audioManager.play('click');
+      audioManager.play('minesweeper-flag');
     }
 
     setGrid(newGrid);

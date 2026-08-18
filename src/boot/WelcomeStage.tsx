@@ -134,13 +134,6 @@ export function WelcomeStage({ onComplete }: { onComplete: () => void }) {
             </button>
           )}
         </div>
-        
-        <div className="relative z-10">
-          <span className="text-white/80 text-sm drop-shadow-md">
-            After you log on, you can add or change accounts.<br />
-            Just go to Control Panel and click User Accounts.
-          </span>
-        </div>
       </div>
     </div>
   );

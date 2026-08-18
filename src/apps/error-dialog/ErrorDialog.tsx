@@ -40,7 +40,7 @@ export function ErrorDialog({ windowId, launchArgs }: ErrorDialogProps) {
             <img src={AssetRegistry.XP_COMMAND_PROMPT_ICON} alt="Error" className="w-8 h-8" onError={(e) => e.currentTarget.style.display = 'none'} />
           )}
         </div>
-        <div className="text-[12px] md:text-[13px] leading-tight font-[Tahoma]">
+        <div className="text-[12px] md:text-[13px] leading-tight font-[Tahoma] text-black">
           {message}
         </div>
       </div>
@@ -48,7 +48,7 @@ export function ErrorDialog({ windowId, launchArgs }: ErrorDialogProps) {
       <div className="mt-auto flex justify-center pb-2">
         <button 
           onClick={handleOk}
-          className="px-6 py-1 bg-[#ece9d8] border-2 border-white shadow-[1px_1px_0px_#000,_inset_-1px_-1px_0px_#aca899] active:shadow-[inset_1px_1px_1px_#000] focus:outline-1 focus:outline-dotted focus:outline-black font-[Tahoma] text-[12px]"
+          className="px-6 py-1 bg-[#ece9d8] border-2 border-white shadow-[1px_1px_0px_#000,_inset_-1px_-1px_0px_#aca899] active:shadow-[inset_1px_1px_1px_#000] focus:outline-1 focus:outline-dotted focus:outline-black font-[Tahoma] text-[12px] text-black"
         >
           OK
         </button>
